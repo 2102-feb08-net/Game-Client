@@ -23,9 +23,8 @@ steps:
   inputs:
     SonarCloud: 'sonarcloud-reventuregame'
     organization: '2102-feb08-net'
-    scannerMode: 'MSBuild'
-    projectKey: '2102-feb08-net_Game-Client'
-    projectName: 'Game-Client'
+    scannerMode: 'CLI'
+    configMode: 'file'
 
 
 - task: SonarCloudAnalyze@1
