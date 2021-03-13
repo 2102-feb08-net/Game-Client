@@ -27,17 +27,6 @@ steps:
     projectKey: '2102-feb08-net_Game-Client'
     projectName: 'Game-Client'
 
-- script: dotnet build --configuration $(buildConfiguration)
-  displayName: dotnet build
-  workingDirectory: 'browser-game'
-
-# - task: DotNetCoreCLI@2
-#   displayName: dotnet test
-#   inputs:
-#     command: 'test'
-#     arguments: '--configuration $(buildConfiguration) --collect "xplat code coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura,opencover'
-#     workingDirectory: 'browser-game'
-
 
 - task: SonarCloudAnalyze@1
   displayName: sonar run analysis
