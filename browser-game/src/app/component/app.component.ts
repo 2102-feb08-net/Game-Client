@@ -13,9 +13,6 @@ export class AppComponent implements OnInit {
 
   title = 'browser-game';
 
-  keyPress(event: KeyboardEvent) {
-    console.log(event)
-}
 
   @ViewChild("canvas")
   private gameCanvas: ElementRef | undefined;
@@ -30,11 +27,20 @@ export class AppComponent implements OnInit {
 
     this.context = this.gameCanvas?.nativeElement.getContext("2d");
 
-    this.context.fillRect(20,20,20,20);
+    this.context.fillRect(this.playerService.player.x, this.playerService.player.y,20,20);
+
+
+  }
+
+  public updateContext(){
+    this.context.clearRect(0, 0, 480, 640);
+    this.context.fillRect(this.playerService.player.x, this.playerService.player.y,20,20);
+
   }
 
   @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
-		this.keyPress(event);
+		this.playerService.movePlayer(event);
+    this.updateContext();
 	}
 
 }

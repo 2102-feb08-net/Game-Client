@@ -11,9 +11,25 @@ export class PlayerUpdate {
 		y: 200,
 	};
 
-    movePlayer(event: KeyboardEvent, type: string): void {
+    playerSpeed = 5;
+
+    movePlayer(event: KeyboardEvent): void {
 		
-        console.log(event);
+    var keyCode = event.keyCode;
+      switch (keyCode) {
+        case 68: //d
+            this.player.x += this.playerSpeed;
+            break;
+        case 83: //s
+            this.player.y += this.playerSpeed;
+            break;
+        case 65: //a
+            this.player.x -= this.playerSpeed;
+            break;
+        case 87: //w
+            this.player.y -= this.playerSpeed;
+            break;
+  }
 
 	}
 
