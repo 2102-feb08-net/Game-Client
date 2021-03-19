@@ -52,9 +52,9 @@ export class AppComponent implements OnInit {
 		this.gameLoop = setInterval(() => {
     this.playerService.updatePlayerContext(this.playercontext);
     this.playerService.animatePlayer();
-
+    this.playerService.movePlayer(this.keysPressed);
     this.mapService.loadMapContext(this.mapContext);
-		}, 100);
+		}, 15);
 
 	}
   
@@ -65,7 +65,7 @@ export class AppComponent implements OnInit {
   @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
 		//this.playerService.movePlayer(event);
     this.keysPressed[event.keyCode] = true;
-    this.playerService.movePlayer(this.keysPressed);
+
     
 	}
 

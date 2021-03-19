@@ -18,7 +18,7 @@ export class PlayerUpdate {
 	};
 
     currentFrame = 0;
-    playerSpeed = 5;
+    playerSpeed = 3;
     playerWidth = 64;
     playerHeight = 46;
 
@@ -70,6 +70,8 @@ export class PlayerUpdate {
            this.isMovingRight = true;
         }
 
+        console.log(this.isMovingRight);
+
         this.handleMovement();
 
   }
@@ -82,7 +84,11 @@ export class PlayerUpdate {
 
   pickImage(){
     if(this.isAttacking){
-        this.image.src = 'assets/imgs/Warrior/WarriorAttack.png'; 
+        this.image.src = 'assets/imgs/Warrior/WarriorAttack.png';
+        return; 
+    }
+    else if(this.isMovingRight){
+        this.image.src = 'assets/imgs/Warrior/WarriorRun.png';
     }
     else{
         this.image.src = 'assets/imgs/Warrior/WarriorIdle.png'; 
