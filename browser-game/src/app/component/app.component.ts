@@ -15,6 +15,8 @@ export class AppComponent implements OnInit {
 
   gameLoop :any;
 
+  keysPressed : { [key: number]: boolean }  = {};
+
 
   @ViewChild("canvas")
   private playerCanvas: ElementRef | undefined;
@@ -48,11 +50,16 @@ export class AppComponent implements OnInit {
   }
 
   @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
-		this.playerService.movePlayer(event);
+		//this.playerService.movePlayer(event);
+    this.keysPressed[event.keyCode] = true;
+    this.playerService.movePlayer(this.keysPressed);
     this.playerService.updatePlayerContext(this.playercontext);
+    
 	}
 
-
+	@HostListener('document:keyup', ['$event']) onKeyupHandler(event: KeyboardEvent) {
+    this.keysPressed[event.keyCode] = false;
+	}
 
 
 }

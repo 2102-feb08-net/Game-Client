@@ -22,6 +22,11 @@ export class PlayerUpdate {
     playerWidth = 64;
     playerHeight = 46;
 
+    isMovingUp = false;
+    isMovingDown = false;
+    isMovingRight = false;
+    isMovingLeft = false;
+
     isAttacking = false;
 
     image : HTMLImageElement = new Image();
@@ -43,37 +48,36 @@ export class PlayerUpdate {
     }
 
     playerAttack(){
-
-        console.log(this.isAttacking);
         this.isAttacking = true;
         this.currentFrame = 0;
     }
 
 
-    movePlayer(event: KeyboardEvent): void {
-		
-    var keyCode = event.keyCode;
-      switch (keyCode) {
-        case 68: //d
-            this.player.x += this.playerSpeed;
-            break;
-        case 83: //s
-            this.player.y += this.playerSpeed;
-            break;
-        case 65: //a
-            this.player.x -= this.playerSpeed;
-            break;
-        case 87: //w
-            this.player.y -= this.playerSpeed;
-            break;
+    movePlayer(keyCodes: { [key: number]: boolean }): void {
+
+        this.resetMovement();
+
+        if(keyCodes[87]){
+            this.isMovingUp = true;
+        }
+        if(keyCodes[65]){
+            this.isMovingLeft = true;
+        }
+        if(keyCodes[83]){
+            this.isMovingDown = true;
+        }
+        if(keyCodes[68]){           
+           this.isMovingRight = true;
+        }
+
+        this.handleMovement();
+
   }
-}
 
     updatePlayerContext(playerContext: any){
         this.pickImage();
         playerContext.clearRect(0, 0, window.innerWidth, window.innerHeight);
         playerContext.drawImage(this.image,0,46*this.currentFrame,64,46,this.player.x,this.player.y,this.playerWidth,this.playerHeight);
-
   }
 
   pickImage(){
@@ -83,7 +87,32 @@ export class PlayerUpdate {
     else{
         this.image.src = 'assets/imgs/Warrior/WarriorIdle.png'; 
     }
-
   }
+
+    resetMovement(){
+        this.isMovingUp = false;
+        this.isMovingDown = false;
+        this.isMovingLeft = false;
+        this.isMovingRight = false;
+    }
+
+    handleMovement(){
+
+        if(this.isMovingLeft){
+            this.player.x -= this.playerSpeed;
+        }
+        if(this.isMovingDown){
+            this.player.y += this.playerSpeed;
+        }
+        if(this.isMovingRight){
+            this.player.x += this.playerSpeed;
+        }
+        if(this.isMovingUp){
+            this.player.y -= this.playerSpeed;
+        }
+
+    }
+
+
 
   }
