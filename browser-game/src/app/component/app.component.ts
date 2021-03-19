@@ -15,9 +15,9 @@ export class AppComponent implements OnInit {
 
 
   @ViewChild("canvas")
-  private gameCanvas: ElementRef | undefined;
+  private playerCanvas: ElementRef | undefined;
 
-  private context: any;
+  private playercontext: any;
 
   public ngOnInit(){
 
@@ -25,22 +25,22 @@ export class AppComponent implements OnInit {
 
   public ngAfterViewInit(){
 
-    this.context = this.gameCanvas?.nativeElement.getContext("2d");
+    this.playercontext = this.playerCanvas?.nativeElement.getContext("2d");
 
-    this.context.fillRect(this.playerService.player.x, this.playerService.player.y,20,20);
+    this.playercontext.fillRect(this.playerService.player.x, this.playerService.player.y,20,20);
 
 
   }
 
   public updateContext(){
-    this.context.clearRect(0, 0, 480, 640);
-    this.context.fillRect(this.playerService.player.x, this.playerService.player.y,20,20);
+    this.playercontext.clearRect(0, 0, 480, 640);
+    this.playercontext.fillRect(this.playerService.player.x, this.playerService.player.y,20,20);
 
   }
 
   @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
 		this.playerService.movePlayer(event);
-    this.updateContext();
+    this.playerService.updatePlayerContext(this.playercontext);
 	}
 
 }

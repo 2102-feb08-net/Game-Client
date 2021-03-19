@@ -7,8 +7,8 @@ import { Injectable, Input } from '@angular/core';
 export class PlayerUpdate {
 
     player: PlayerPosition = {
-		x: 200,
-		y: 200,
+		x: 100,
+		y: 100,
 	};
 
     playerSpeed = 5;
@@ -30,8 +30,11 @@ export class PlayerUpdate {
             this.player.y -= this.playerSpeed;
             break;
   }
+}
 
-	}
+    updatePlayerContext(playerContext: any){
+        playerContext.clearRect(0, 0, window.innerWidth, window.innerHeight);
+        playerContext.fillRect(this.player.x, this.player.y,20,20);
 
-
+  }
 }
