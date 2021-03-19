@@ -21,20 +21,14 @@ export class AppComponent implements OnInit {
 
   public ngOnInit(){
 
+
   }
 
   public ngAfterViewInit(){
 
     this.playercontext = this.playerCanvas?.nativeElement.getContext("2d");
 
-    this.playercontext.fillRect(this.playerService.player.x, this.playerService.player.y,20,20);
-
-
-  }
-
-  public updateContext(){
-    this.playercontext.clearRect(0, 0, 480, 640);
-    this.playercontext.fillRect(this.playerService.player.x, this.playerService.player.y,20,20);
+    this.playerService.updatePlayerContext(this.playercontext);
 
   }
 

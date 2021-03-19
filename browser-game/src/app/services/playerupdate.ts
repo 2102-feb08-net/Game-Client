@@ -6,12 +6,22 @@ import { Injectable, Input } from '@angular/core';
 
 export class PlayerUpdate {
 
+    constructor(){
+        this.image.height=this.playerHeight;
+        this.image.width = this.playerWidth;
+        this.image.src = 'assets/imgs/charizard.png';
+    }
+
     player: PlayerPosition = {
 		x: 100,
 		y: 100,
 	};
 
     playerSpeed = 5;
+    playerWidth = 20;
+    playerHeight = 20;
+    image : HTMLImageElement = new Image();
+
 
     movePlayer(event: KeyboardEvent): void {
 		
@@ -34,7 +44,8 @@ export class PlayerUpdate {
 
     updatePlayerContext(playerContext: any){
         playerContext.clearRect(0, 0, window.innerWidth, window.innerHeight);
-        playerContext.fillRect(this.player.x, this.player.y,20,20);
+        playerContext.drawImage(this.image,this.player.x,this.player.y,this.playerWidth,this.playerHeight);
 
   }
-}
+
+  }
