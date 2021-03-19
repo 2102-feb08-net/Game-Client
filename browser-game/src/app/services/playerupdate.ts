@@ -34,6 +34,7 @@ export class PlayerUpdate {
     animatePlayer(){
         this.currentFrame += .12;
         if(this.isAttacking){
+            this.currentFrame += .12;
             if(this.currentFrame > 11){
                 this.currentFrame = 0;
                 this.isAttacking = false;
@@ -89,6 +90,9 @@ export class PlayerUpdate {
     }
     else if(this.isMovingRight){
         this.image.src = 'assets/imgs/Warrior/WarriorRun.png';
+    }
+    else if(this.isMovingLeft){
+        this.image.src = 'assets/imgs/Warrior/WarriorRunLeft.png';
     }
     else{
         this.image.src = 'assets/imgs/Warrior/WarriorIdle.png'; 
