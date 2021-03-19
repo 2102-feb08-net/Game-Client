@@ -42,7 +42,7 @@ export class AppComponent implements OnInit {
 		this.gameLoop = setInterval(() => {
     this.playerService.updatePlayerContext(this.playercontext);
     this.playerService.animatePlayer();
-		}, 100);
+		}, 10);
 	}
   
   attack() {
@@ -53,7 +53,6 @@ export class AppComponent implements OnInit {
 		//this.playerService.movePlayer(event);
     this.keysPressed[event.keyCode] = true;
     this.playerService.movePlayer(this.keysPressed);
-    this.playerService.updatePlayerContext(this.playercontext);
     
 	}
 
