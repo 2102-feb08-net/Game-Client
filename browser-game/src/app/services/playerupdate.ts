@@ -9,7 +9,7 @@ export class PlayerUpdate {
     constructor(){
         this.image.height=this.playerHeight;
         this.image.width = this.playerWidth;
-        this.image.src = 'assets/imgs/charizard.png';
+        this.image.src = 'assets/imgs/Warrior/WarriorIdle.png';
     }
 
     player: PlayerPosition = {
@@ -17,10 +17,18 @@ export class PlayerUpdate {
 		y: 100,
 	};
 
+    currentFrame = 0;
     playerSpeed = 5;
-    playerWidth = 20;
-    playerHeight = 20;
+    playerWidth = 64;
+    playerHeight = 46;
     image : HTMLImageElement = new Image();
+
+    animatePlayer(){
+        this.currentFrame++;
+        if(this.currentFrame > 5){
+            this.currentFrame = 0;
+        }
+    }
 
 
     movePlayer(event: KeyboardEvent): void {
@@ -43,8 +51,9 @@ export class PlayerUpdate {
 }
 
     updatePlayerContext(playerContext: any){
+      
         playerContext.clearRect(0, 0, window.innerWidth, window.innerHeight);
-        playerContext.drawImage(this.image,this.player.x,this.player.y,this.playerWidth,this.playerHeight);
+        playerContext.drawImage(this.image,0,46*this.currentFrame,64,46,this.player.x,this.player.y,this.playerWidth,this.playerHeight);
 
   }
 

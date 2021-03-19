@@ -39,8 +39,8 @@ export class AppComponent implements OnInit {
 	startGameLoop() {
 		this.gameLoop = setInterval(() => {
     this.playerService.updatePlayerContext(this.playercontext);
-    console.log("gameloop");
-		}, 10);
+    this.playerService.animatePlayer();
+		}, 100);
 	}
   
 
