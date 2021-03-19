@@ -21,13 +21,32 @@ export class PlayerUpdate {
     playerSpeed = 5;
     playerWidth = 64;
     playerHeight = 46;
+
+    isAttacking = false;
+
     image : HTMLImageElement = new Image();
 
     animatePlayer(){
         this.currentFrame++;
-        if(this.currentFrame > 5){
-            this.currentFrame = 0;
+        if(this.isAttacking){
+            if(this.currentFrame > 11){
+                this.currentFrame = 0;
+                this.isAttacking = false;
+            }
         }
+        else{
+            if(this.currentFrame > 5){
+                this.currentFrame = 0;
+            }
+        }
+ 
+    }
+
+    playerAttack(){
+
+        console.log(this.isAttacking);
+        this.isAttacking = true;
+        this.currentFrame = 0;
     }
 
 
@@ -51,9 +70,19 @@ export class PlayerUpdate {
 }
 
     updatePlayerContext(playerContext: any){
-      
+        this.pickImage();
         playerContext.clearRect(0, 0, window.innerWidth, window.innerHeight);
         playerContext.drawImage(this.image,0,46*this.currentFrame,64,46,this.player.x,this.player.y,this.playerWidth,this.playerHeight);
+
+  }
+
+  pickImage(){
+    if(this.isAttacking){
+        this.image.src = 'assets/imgs/Warrior/WarriorAttack.png'; 
+    }
+    else{
+        this.image.src = 'assets/imgs/Warrior/WarriorIdle.png'; 
+    }
 
   }
 

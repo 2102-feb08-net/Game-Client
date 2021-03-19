@@ -43,10 +43,16 @@ export class AppComponent implements OnInit {
 		}, 100);
 	}
   
+  attack() {
+    this.playerService.playerAttack();
+  }
 
   @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
 		this.playerService.movePlayer(event);
     this.playerService.updatePlayerContext(this.playercontext);
 	}
+
+
+
 
 }
