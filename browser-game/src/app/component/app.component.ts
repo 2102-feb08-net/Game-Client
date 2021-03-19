@@ -13,6 +13,8 @@ export class AppComponent implements OnInit {
 
   title = 'browser-game';
 
+  gameLoop :any;
+
 
   @ViewChild("canvas")
   private playerCanvas: ElementRef | undefined;
@@ -30,7 +32,17 @@ export class AppComponent implements OnInit {
 
     this.playerService.updatePlayerContext(this.playercontext);
 
+    this.startGameLoop();
+
   }
+
+	startGameLoop() {
+		this.gameLoop = setInterval(() => {
+    this.playerService.updatePlayerContext(this.playercontext);
+    console.log("gameloop");
+		}, 10);
+	}
+  
 
   @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
 		this.playerService.movePlayer(event);
