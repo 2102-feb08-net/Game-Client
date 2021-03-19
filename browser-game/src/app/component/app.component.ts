@@ -52,8 +52,10 @@ export class AppComponent implements OnInit {
 		this.gameLoop = setInterval(() => {
     this.playerService.updatePlayerContext(this.playercontext);
     this.playerService.animatePlayer();
+
     this.mapService.loadMapContext(this.mapContext);
 		}, 100);
+
 	}
   
   attack() {
@@ -64,7 +66,6 @@ export class AppComponent implements OnInit {
 		//this.playerService.movePlayer(event);
     this.keysPressed[event.keyCode] = true;
     this.playerService.movePlayer(this.keysPressed);
-    this.playerService.updatePlayerContext(this.playercontext);
     
 	}
 

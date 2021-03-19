@@ -32,7 +32,7 @@ export class PlayerUpdate {
     image : HTMLImageElement = new Image();
 
     animatePlayer(){
-        this.currentFrame++;
+        this.currentFrame += .12;
         if(this.isAttacking){
             if(this.currentFrame > 11){
                 this.currentFrame = 0;
@@ -77,7 +77,7 @@ export class PlayerUpdate {
     updatePlayerContext(playerContext: any){
         this.pickImage();
         playerContext.clearRect(0, 0, window.innerWidth, window.innerHeight);
-        playerContext.drawImage(this.image,0,46*this.currentFrame,64,46,this.player.x,this.player.y,this.playerWidth,this.playerHeight);
+        playerContext.drawImage(this.image,0,46*Math.floor(this.currentFrame),64,46,this.player.x,this.player.y,this.playerWidth,this.playerHeight);
   }
 
   pickImage(){
