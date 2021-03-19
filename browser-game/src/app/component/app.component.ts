@@ -2,6 +2,8 @@ import { Component ,OnInit, ViewChild, ElementRef, HostListener} from '@angular/
 
 import {PlayerUpdate} from '../services/playerupdate';
 
+import {BackgroundService} from '../services/backgroundservice';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -9,7 +11,7 @@ import {PlayerUpdate} from '../services/playerupdate';
 })
 export class AppComponent implements OnInit {
 
-  constructor(private playerService: PlayerUpdate){}
+  constructor(private playerService: PlayerUpdate, private mapService: BackgroundService){}
 
   title = 'browser-game';
 
@@ -23,6 +25,10 @@ export class AppComponent implements OnInit {
 
   private playercontext: any;
 
+  @ViewChild("gamemap")
+  private gameMap: ElementRef | undefined;
+  private mapContext: any;
+
   public ngOnInit(){
 
 
@@ -34,6 +40,10 @@ export class AppComponent implements OnInit {
 
     this.playerService.updatePlayerContext(this.playercontext);
 
+    this.mapContext = this.gameMap?.nativeElement.getContext("2d");
+
+    this.mapService.loadMapContext(this.mapContext);
+
     this.startGameLoop();
 
   }
@@ -42,6 +52,7 @@ export class AppComponent implements OnInit {
 		this.gameLoop = setInterval(() => {
     this.playerService.updatePlayerContext(this.playercontext);
     this.playerService.animatePlayer();
+    this.mapService.loadMapContext(this.mapContext);
 		}, 100);
 	}
   
