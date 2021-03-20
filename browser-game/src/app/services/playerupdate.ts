@@ -21,6 +21,9 @@ export class PlayerUpdate {
     playerSpeed = 3;
     playerWidth = 64;
     playerHeight = 46;
+    username = "Guest";
+    maxHealth = 10;
+    currentHealth = 10;
 
     isMovingUp = false;
     isMovingDown = false;
@@ -80,6 +83,9 @@ export class PlayerUpdate {
     updatePlayerContext(playerContext: any){
         this.pickImage();
         playerContext.clearRect(0, 0, window.innerWidth, window.innerHeight);
+        playerContext.clearRect(0, 0, window.innerWidth, window.innerHeight);
+        playerContext.fillStyle = 'Red';
+        playerContext.fillRect(this.player.x+21, this.player.y+22, 20*this.currentHealth/this.maxHealth, 1.5);
         playerContext.drawImage(this.image,0,46*Math.floor(this.currentFrame),64,46,this.player.x,this.player.y,this.playerWidth,this.playerHeight);
   }
 
@@ -122,6 +128,7 @@ export class PlayerUpdate {
         }
 
     }
+
 
 
 
