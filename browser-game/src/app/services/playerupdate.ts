@@ -87,6 +87,10 @@ export class PlayerUpdate {
 
     movePlayer(keyCodes: { [key: number]: boolean }): void {
 
+        if(this.isDead){
+            return;
+        }
+
         this.resetMovement();
 
         if(keyCodes[87]){
@@ -110,6 +114,7 @@ export class PlayerUpdate {
 
     updatePlayerContext(playerContext: any){
         this.pickImage();
+        this.animatePlayer();
         playerContext.clearRect(0, 0, window.innerWidth, window.innerHeight);
         playerContext.clearRect(0, 0, window.innerWidth, window.innerHeight);
         playerContext.fillStyle = 'Red';
@@ -180,7 +185,7 @@ export class PlayerUpdate {
 
         this.currentHealth -= damage;
 
-        if(this.currentHealth < 0){
+        if(this.currentHealth <= 0){
             this.isDead = true;
         }
     }
