@@ -1,4 +1,4 @@
-import { PlayerPosition } from '../interfaces/playerposition';
+import { Position } from '../interfaces/position';
 
 import { Injectable, Input } from '@angular/core';
 
@@ -12,7 +12,7 @@ export class PlayerUpdate {
         this.image.src = 'assets/imgs/Warrior/WarriorIdle.png';
     }
 
-    player: PlayerPosition = {
+    player: Position = {
 		x: 100,
 		y: 100,
 	};
@@ -105,8 +105,6 @@ export class PlayerUpdate {
         if(keyCodes[68]){           
            this.isMovingRight = true;
         }
-
-        console.log(this.isMovingRight);
 
         this.handleMovement();
 

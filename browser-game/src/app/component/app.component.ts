@@ -4,6 +4,8 @@ import {PlayerUpdate} from '../services/playerupdate';
 
 import {BackgroundService} from '../services/backgroundservice';
 
+import {MobService} from '../services/mobservice';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -11,7 +13,7 @@ import {BackgroundService} from '../services/backgroundservice';
 })
 export class AppComponent implements OnInit {
 
-  constructor(private playerService: PlayerUpdate, private mapService: BackgroundService){}
+  constructor(private playerService: PlayerUpdate, private mapService: BackgroundService, private mobService: MobService){}
 
   title = 'browser-game';
 
@@ -22,12 +24,15 @@ export class AppComponent implements OnInit {
 
   @ViewChild("canvas")
   private playerCanvas: ElementRef | undefined;
-
   private playercontext: any;
 
   @ViewChild("gamemap")
   private gameMap: ElementRef | undefined;
   private mapContext: any;
+
+  @ViewChild("mobcanvas")
+  private mobCanvas: ElementRef | undefined;
+  private mobContext: any;
 
   public ngOnInit(){
 
@@ -38,13 +43,15 @@ export class AppComponent implements OnInit {
 
     this.playercontext = this.playerCanvas?.nativeElement.getContext("2d");
 
-    this.playerService.updatePlayerContext(this.playercontext);
-
     this.mapContext = this.gameMap?.nativeElement.getContext("2d");
 
     this.mapService.loadMapContext(this.mapContext);
 
+    this.mobContext = this.mobCanvas?.nativeElement.getContext("2d");
+
     this.startGameLoop();
+
+    this.mobService.DeclareConfig();
 
   }
 
@@ -53,6 +60,7 @@ export class AppComponent implements OnInit {
     this.playerService.updatePlayerContext(this.playercontext);
     this.playerService.movePlayer(this.keysPressed);
     this.mapService.loadMapContext(this.mapContext);
+    this.mobService.UpdateMobs(this.mobContext);
 		}, 15);
 
 	}
