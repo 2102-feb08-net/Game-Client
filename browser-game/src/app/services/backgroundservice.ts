@@ -4,45 +4,76 @@ import {Injectable, Input} from '@angular/core';
 @Injectable()
 
 export class BackgroundService {
+    // Map
+    
+
+    // Tile size and resource 
     constructor(){
-        this.image.height = this.imgheight;
-        this.image.width = this.imgwidth;
-        this.image.src = this.map.imgsrc;
-        this.tile.height = 16;
-        this.tile.width = 16;
-        this.tile.src = "assets/imgs/Tileset/Tile.png";
+        this.tile.height = this.map.tileSize;
+        this.tile.width = this.map.tileSize;
+        this.tile.src = this.map.imgsrc;
+        this.tileLayer = this.map.layer;
     }
 
+    // Map size and resource
     map: BackgroundMap = {
-        imgsrc:"assets/imgs/greenbckg.jpg",
-        height: 400,
-        width: 400
+        imgsrc:"assets/imgs/Tileset/Tile.png",
+        mapHeight: 320,
+        mapWidth: 320, 
+        columns: 20, 
+        rows: 20, 
+        tileSize: 16,
+        layer: [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+                 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+                 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+                 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+                 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+                 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+                 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+                 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+                 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+                 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+                 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+                 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+                 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+                 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+                 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+                 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+                 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+                 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+                 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+                 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]
+                
     };
-
-    imgheight = 320;
-    imgwidth = 320;
-
-    image: HTMLImageElement = new Image();
     
+    // Tile position
     tilex = 0;
     tiley= 0;
-
     tile: HTMLImageElement = new Image();
 
 
     // Generate Map
-    
-    // Sync layers
+    tileLayer: any;
 
-    //Load map
-    loadMapContext(mapContext: any){
-        for (let i = 0; i < this.imgheight; i +=16) {
-            for(let j =0; j < this.imgwidth; j+=16) {
-                mapContext.drawImage(this.tile, 0, 0, 16, 16, this.tilex+j, this.tiley+i, this.tile.width, this.tile.height);
+    generateMap(mapContext: any) {
+        for (let i = 0; i < this.map.rows; i++) {
+            for(let j = 0; j < this.map.columns; j++) {
+                mapContext.drawImage(this.tile, (this.tileLayer[0][i*this.map.columns+j] - 1)*16, (this.tileLayer[0][i*this.map.columns] - 1)*16, 16, 16, (this.tilex+j) * 16, (this.tiley+i) * 16, this.tile.width, this.tile.height);
             }
         }
-        
+        mapContext.save();
+        return mapContext;
     }
+
+    // Load map
+    loadMapContext(mapContext: any){
+        let mapState = this.generateMap(mapContext);
+        mapState.restore();
+    }
+
+    // UpdateMap
+
+
     //Handle map events (loading map zones or other maps)
 
 }

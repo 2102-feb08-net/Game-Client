@@ -1,5 +1,9 @@
 export interface BackgroundMap {
     imgsrc: string;
-    height: number;
-    width: number;
+    mapHeight: number;
+    mapWidth: number;
+    columns: number;
+    rows: number;
+    tileSize: number;
+    layer: Array<Array<number>>;
 }
