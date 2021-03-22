@@ -78,6 +78,16 @@ export class Mob {
             image = this.mobimage;
         }
 
+        //Draw Mobs Healthbar
+
+        let healthbarlength = this.getHealthBarLength();
+
+        mobContext.fillStyle = '#990000';
+
+        mobContext.fillRect(this.mob.x + 5, this.mob.y + Orc.height,healthbarlength , 1.5);
+
+        //Draw Mob Himself
+
         mobContext.drawImage(image,32*Math.floor(this.currentFrame), Orc.height*this.currentRow + Orc.width*Orc.animationCount*this.Id,Orc.width,Orc.height,Math.floor(this.mob.x),Math.floor(this.mob.y),Orc.width,Orc.height);
     }
 
@@ -184,9 +194,16 @@ export class Mob {
         this.isAttacking = true;
     }
 
+ 
     handleHit(damage: number){
 
+        this.currentHealth -= damage;
+
+        if(this.currentHealth <= 0){
+            this.isDead = true;
+        }
     }
+    
     moveMobTowardsPlayer(position: Position){
    
         if(this.mob.x - Orc.width/2 < position.x){
