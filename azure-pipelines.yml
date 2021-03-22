@@ -36,25 +36,25 @@ steps:
 
 # ng e2e... exercise for the reader
 
-- task: SonarCloudPrepare@1
-  displayName: sonar prepare analysis
-  inputs:
-    SonarCloud: 'sonarcloud-reventuregame'
-    organization: '2102-feb08-net'
-    scannerMode: 'CLI'
-    configMode: 'manual'
-    cliProjectKey: '2102-feb08-net_Game-Client'
-    cliProjectName: 'Game-Client'
-    cliSources: '$(appDirectory)/src'
-    extraProperties: 'sonar.javascript.lcov.reportPaths=$(appDirectory)/coverage/browser-game/lcov.info'
+# - task: SonarCloudPrepare@1
+#   displayName: sonar prepare analysis
+#   inputs:
+#     SonarCloud: 'sonarcloud-reventuregame'
+#     organization: '2102-feb08-net'
+#     scannerMode: 'CLI'
+#     configMode: 'manual'
+#     cliProjectKey: '2102-feb08-net_Game-Client'
+#     cliProjectName: 'Game-Client'
+#     cliSources: '$(appDirectory)/src'
+#     extraProperties: 'sonar.javascript.lcov.reportPaths=$(appDirectory)/coverage/browser-game/lcov.info'
 
-- task: SonarCloudAnalyze@1
-  displayName: sonar run analysis
+# - task: SonarCloudAnalyze@1
+#   displayName: sonar run analysis
 
-- task: SonarCloudPublish@1
-  displayName: sonar publish analysis result
-  inputs:
-    pollingTimeoutSec: '300'
+# - task: SonarCloudPublish@1
+#   displayName: sonar publish analysis result
+#   inputs:
+#     pollingTimeoutSec: '300'
 
 # - task: AzureRmWebAppDeployment@4
 #   displayName: app service deploy
