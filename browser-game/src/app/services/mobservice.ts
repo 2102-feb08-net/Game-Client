@@ -25,7 +25,15 @@ export class MobService {
 
         var mob3 = new Mob(100,50,1);
 
-        this.currentMobs.push(mob,mob2,mob3);
+        var mob4 = new Mob(200, 100, 2);
+
+        var mob5 = new Mob(250, 100, 3);
+
+        var mob6 = new Mob(50, 50, 4);
+
+        var mob7 = new Mob(250, 50, 5);
+
+        this.currentMobs.push(mob,mob2,mob3, mob4, mob5, mob6, mob7);
     }
 
     DrawMobs(mobContext: any){
