@@ -1,12 +1,19 @@
+import { HttpClient } from '@angular/common/http';
 import {Mob} from '../classes/mob';
 
 import { Position } from '../interfaces/position';
 
 import { Injectable } from '@angular/core';
+import { MobObj } from '../interfaces/mob';
+import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 
 export class MobService {
+    private readonly baseUrl = environment.gameApiBaseUrl;
+
+    constructor(private http: HttpClient){}
 
     currentMobs: Mob[] = [];
 
@@ -30,4 +37,9 @@ export class MobService {
         this.currentMobs.forEach(mob => mob.handleMovement(player));
     }
 
+    getAllMobs(): Observable<MobObj[]> {
+        return this.http.get<MobObj[]>(`${this.baseUrl}/api/mobs`);
+      }
+
+    
   }
