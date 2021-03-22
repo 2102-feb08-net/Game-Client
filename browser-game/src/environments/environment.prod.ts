@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  gameApiBaseUrl: "https://localhost:44332"
 };

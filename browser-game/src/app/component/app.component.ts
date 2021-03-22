@@ -1,10 +1,8 @@
 import { Component ,OnInit, ViewChild, ElementRef, HostListener} from '@angular/core';
-
 import {PlayerUpdate} from '../services/playerupdate';
-
 import {BackgroundService} from '../services/backgroundservice';
-
 import {MobService} from '../services/mobservice';
+import {LoginApiService} from '../services/loginservice'
 
 @Component({
   selector: 'app-root',
@@ -13,7 +11,11 @@ import {MobService} from '../services/mobservice';
 })
 export class AppComponent implements OnInit {
 
-  constructor(private playerService: PlayerUpdate, private mapService: BackgroundService, private mobService: MobService){}
+  constructor(
+    private playerService: PlayerUpdate, 
+    private mapService: BackgroundService, 
+    private mobService: MobService, 
+    private loginService: LoginApiService){}
 
   title = 'browser-game';
 
@@ -35,7 +37,12 @@ export class AppComponent implements OnInit {
   private mobContext: any;
 
   public ngOnInit(){
-
+    this.loginService.getPlayer('hamza@gmail.com', 'password123').subscribe(
+      (player) => {
+        let playerInfo: string = player.id + ' ' + player.characterId + ' ' + player.username + ' ' + player.password;
+        console.log(playerInfo);
+      }
+    );
 
   }
 
