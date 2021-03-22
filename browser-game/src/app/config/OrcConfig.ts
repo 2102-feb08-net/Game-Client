@@ -3,5 +3,6 @@ export const Orc = {
     width: 32,
     height:32,
     numberofFrames:8,
-    attackRange:75
+    attackRange:75,
+    animationCount:5,
 };

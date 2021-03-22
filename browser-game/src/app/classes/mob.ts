@@ -3,7 +3,8 @@ import {Orc} from '../config/OrcConfig';
 
 export class Mob {
 
-    constructor(x:number,y:number){
+    constructor(x:number,y:number,id:number){
+        this.Id = id;
         this.mob.x=x;
         this.mob.y=y;
         this.mobimage.height=Orc.height;
@@ -22,6 +23,7 @@ export class Mob {
     mobSpeed = 1;
     //Fields Related to Mob Information
 
+    Id = 0;
     mobType = "Goblin";
     maxHealth = 10;
     currentHealth = 10;
@@ -61,7 +63,7 @@ export class Mob {
     }
 
     drawMob(mobContext: any){
-        mobContext.drawImage(this.mobimage,32*Math.floor(this.currentFrame), Orc.height*this.currentRow,Orc.width,Orc.height,Math.floor(this.mob.x),Math.floor(this.mob.y),Orc.width,Orc.height);
+        mobContext.drawImage(this.mobimage,32*Math.floor(this.currentFrame), Orc.height*this.currentRow + Orc.width*Orc.animationCount*this.Id,Orc.width,Orc.height,Math.floor(this.mob.x),Math.floor(this.mob.y),Orc.width,Orc.height);
     }
 
    
