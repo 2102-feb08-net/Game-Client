@@ -1,44 +1,66 @@
+# Node.js with Angular
+# Build a Node.js project that uses Angular.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
 trigger:
 - main
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: ubuntu-latest
 
 variables:
-  buildConfiguration: 'Release'
+  appDirectory: browser-game
 
 steps:
-- task: UseDotNet@2
-  displayName: dotnet sdk
+- task: NodeTool@0
   inputs:
-    packageType: 'sdk'
-    version: '5.0.x'
+    versionSpec: '14.x'
+  displayName: 'Install Node.js'
 
-- task: UseDotNet@2
-  inputs:
-    packageType: 'runtime'
-    version: '2.x'
+- script: npm ci
+  displayName: npm install
+  workingDirectory: $(appDirectory)
+
+- script: npx ng build
+  displayName: ng build
+  workingDirectory: $(appDirectory)
+
+- script: npx ng lint
+  displayName: ng lint
+  workingDirectory: $(appDirectory)
+
+- script: npx ng test --browsers ChromeHeadless --no-watch --code-coverage
+  displayName: ng test
+  workingDirectory: $(appDirectory)
+
+# ng e2e... exercise for the reader
 
 - task: SonarCloudPrepare@1
+  displayName: sonar prepare analysis
   inputs:
     SonarCloud: 'sonarcloud-reventuregame'
     organization: '2102-feb08-net'
     scannerMode: 'CLI'
-    configMode: 'file'
-
+    configMode: 'manual'
+    cliProjectKey: '2102-feb08-net_Game-Client'
+    cliProjectName: 'Game-Client'
+    cliSources: '$(appDirectory)/src'
+    extraProperties: 'sonar.javascript.lcov.reportPaths=$(appDirectory)/coverage/browser-game/lcov.info'
 
 - task: SonarCloudAnalyze@1
   displayName: sonar run analysis
 
 - task: SonarCloudPublish@1
-  displayName: publish sonar quality gate
+  displayName: sonar publish analysis result
   inputs:
     pollingTimeoutSec: '300'
 
-- task: PublishCodeCoverageResults@1
-  displayName: publish code coverage report
-  inputs:
-    codeCoverageTool: 'Cobertura'
-    summaryFileLocation: '$(Agent.TempDirectory)/*/coverage.cobertura.xml'
-
-
+# - task: AzureRmWebAppDeployment@4
+#   displayName: app service deploy
+#   inputs:
+#     ConnectionType: 'AzureRM'
+#     azureSubscription: 'Training(0c61e2ed-4a6a-437f-9a03-1f223527220b)'
+#     appType: 'webApp'
+#     WebAppName: '2102-escalona-email-ui'
+#     packageForLinux: '$(appDirectory)/dist/email-ui'
