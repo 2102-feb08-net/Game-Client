@@ -1,5 +1,7 @@
 import {Mob} from '../classes/mob';
 
+import { Position } from '../interfaces/position';
+
 import { Injectable } from '@angular/core';
 
 @Injectable()
@@ -15,9 +17,13 @@ export class MobService {
         this.currentMobs.push(mob);
     }
 
-    UpdateMobs(mobContext: any){
+    DrawMobs(mobContext: any){
         mobContext.clearRect(0,0,window.innerWidth,window.innerHeight);
         this.currentMobs.forEach(mob => mob.updateMobContext(mobContext));
+    }
+
+    MoveMobs(position:Position){
+        this.currentMobs.forEach(mob => mob.handleMovement(position));
     }
 
   }

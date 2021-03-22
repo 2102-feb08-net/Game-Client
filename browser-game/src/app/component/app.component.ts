@@ -60,7 +60,8 @@ export class AppComponent implements OnInit {
     this.playerService.updatePlayerContext(this.playercontext);
     this.playerService.movePlayer(this.keysPressed);
     this.mapService.loadMapContext(this.mapContext);
-    this.mobService.UpdateMobs(this.mobContext);
+    this.mobService.DrawMobs(this.mobContext);
+    this.mobService.MoveMobs(this.playerService.player);
 		}, 15);
 
 	}

@@ -15,12 +15,9 @@ export class Mob {
 	};
 
     //Fields Related to Character Sprite
-
+    currentRow = 0;
     currentFrame = 0;
-    mobSpeed = 3;
-    mobWidth = 40;
-    mobHeight = 40;
-
+    mobSpeed = 1;
     //Fields Related to Mob Information
 
     mobType = "Goblin";
@@ -57,7 +54,8 @@ export class Mob {
     }
 
     drawMob(mobContext: any){
-        mobContext.drawImage(this.mobimage,32*Math.floor(this.currentFrame),0,32,32,this.mob.x,this.mob.y,Orc.width,Orc.height);
+        console.log(this.currentRow);
+        mobContext.drawImage(this.mobimage,32*Math.floor(this.currentFrame), Orc.height*this.currentRow,Orc.width,Orc.height,this.mob.x,this.mob.y,Orc.width,Orc.height);
     }
 
     animateMob(){
@@ -112,22 +110,20 @@ export class Mob {
   pickImage(){
 
     if(this.isDead){
-        this.mobimage.src = 'assets/imgs/Warrior/WarriorDeath.png';
-        return; 
+        this.currentRow=4
+        return;
     }
     else if(this.isAttacking){
-        this.mobimage.src = 'assets/imgs/Warrior/WarriorAttack.png';
-        return; 
+        this.currentRow = 3;
+        return;
     }
-    else if(this.isMovingRight){
-        this.mobimage.src = 'assets/imgs/Warrior/WarriorRun.png';
-    }
-    else if(this.isMovingLeft){
-        this.mobimage.src = 'assets/imgs/Warrior/WarriorRunLeft.png';
+    else if(this.isMovingLeft || this.isMovingRight){
+        this.currentRow = 2;
     }
     else{
-        this.mobimage.src = Orc.spritePath; 
+        this.currentRow = 0;
     }
+
   }
 
     resetMovement(){
@@ -137,11 +133,49 @@ export class Mob {
         this.isMovingRight = false;
     }
 
-    handleMovement(){
+    handleMovement(playerposition: Position){
 
+        let distance = this.calculateDistanceToPlayer(playerposition);
+
+        if(distance < 50){
+            this.moveMobTowardsPlayer(playerposition);
+        }
     }
 
     handleHit(damage: number){
+
+    }
+    moveMobTowardsPlayer(position: Position){
+        
+        if(this.mob.x < position.x){
+            this.mob.x += this.mobSpeed;
+        }
+        else{
+            this.mob.x -= this.mobSpeed;
+        }
+
+        if(this.mob.y < position.y){
+            this.mob.y += this.mobSpeed;
+        }
+        else{
+            this.mob.y -= this.mobSpeed;
+        }
+    }
+
+
+    calculateDistanceToPlayer(position: Position){
+
+        let xdiff = Math.abs(this.mob.x - position.x);
+
+        let ydiff = Math.abs(this.mob.y - position.y);
+
+        let ysquared = Math.pow(ydiff, 2);
+
+        let xsquared = Math.pow(xdiff, 2);
+
+        let distance = Math.sqrt(ysquared+ xsquared);
+
+        return distance;
 
     }
 
