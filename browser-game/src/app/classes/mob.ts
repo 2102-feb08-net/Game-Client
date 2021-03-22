@@ -30,10 +30,7 @@ export class Mob {
 
     //Movement and Mob State
 
-    isMovingUp = false;
-    isMovingDown = false;
-    isMovingRight = false;
-    isMovingLeft = false;
+    isMoving = false;
 
     velocityXModifier = 1;
     velocityYModifier = 1;
@@ -96,7 +93,7 @@ export class Mob {
         this.currentRow = 3;
         return;
     }
-    else if(this.isMovingLeft || this.isMovingRight){
+    else if(this.isMoving){
         this.currentRow = 2;
     }
     else{
@@ -105,12 +102,6 @@ export class Mob {
 
   }
 
-    resetMovement(){
-        this.isMovingUp = false;
-        this.isMovingDown = false;
-        this.isMovingLeft = false;
-        this.isMovingRight = false;
-    }
 
     calculateVelocityModifier(playerlocation:Position){
         
@@ -129,7 +120,7 @@ export class Mob {
             this.velocityYModifier = .2;
         }
         else if(this.velocityXModifier < .2){
-            this.velocityXModifier =.2;
+            this.velocityXModifier = .2;
         }
 
         
@@ -143,12 +134,17 @@ export class Mob {
         this.calculateVelocityModifier(player.player);
 
         if(distance < Orc.attackRange && distance > 10){
+            this.isMoving = true;
             this.moveMobTowardsPlayer(player.player);
         }
 
         else if (distance <= 15){
             this.InitiateAttack(player);
         }
+        else{
+            this.isMoving = false;
+        }
+
     }
 
     InitiateAttack(player:any){
@@ -163,7 +159,7 @@ export class Mob {
 
     }
     moveMobTowardsPlayer(position: Position){
-        
+   
         if(this.mob.x - Orc.width/2 < position.x){
             this.mob.x += this.mobSpeed*this.velocityXModifier;
         }
