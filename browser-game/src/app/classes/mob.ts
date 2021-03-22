@@ -31,7 +31,7 @@ export class Mob {
     maxHealth = 10;
     currentHealth = 10;
     defense = 10;
-    attack = 1;
+    attack = .001;
 
     //Movement and Mob State
 
@@ -59,7 +59,11 @@ export class Mob {
     updateFrame(){
         this.currentFrame += .1;
         if(this.currentFrame > Orc.numberofFrames){
-            if(this.isAttacking){
+            if(this.isDead){
+                this.currentFrame = Orc.numberofFrames-1;
+                return;
+            }
+            else if(this.isAttacking){
                 this.isAttacking = false;
             }
             this.currentFrame = 0;
@@ -143,13 +147,13 @@ export class Mob {
 
         this.velocityYModifier = this.mobSpeed*ydiff/totaldiff;
 
-        if(this.velocityYModifier < .2){
+
+        if(this.velocityYModifier < .3){
             this.velocityYModifier = .2;
         }
-        else if(this.velocityXModifier < .2){
+        else if(this.velocityXModifier < .3){
             this.velocityXModifier = .2;
         }
-
         
 
     }
@@ -165,6 +169,10 @@ export class Mob {
 
 
     handleMovement(player: any){
+        
+        if(this.isDead){
+            return;
+        }
 
         let distance = this.calculateDistanceToPlayer(player.player);
 
@@ -203,7 +211,7 @@ export class Mob {
             this.isDead = true;
         }
     }
-    
+
     moveMobTowardsPlayer(position: Position){
    
         if(this.mob.x - Orc.width/2 < position.x){

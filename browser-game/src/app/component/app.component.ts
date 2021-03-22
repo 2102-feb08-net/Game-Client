@@ -2,7 +2,10 @@ import { Component ,OnInit, ViewChild, ElementRef, HostListener} from '@angular/
 import {PlayerUpdate} from '../services/playerupdate';
 import {BackgroundService} from '../services/backgroundservice';
 import {MobService} from '../services/mobservice';
-import {LoginApiService} from '../services/loginservice'
+import {LoginApiService} from '../services/loginservice';
+import {PhysicsService} from '../services/physicsservice';
+
+import {Position} from '../interfaces/position';
 
 @Component({
   selector: 'app-root',
@@ -12,6 +15,7 @@ import {LoginApiService} from '../services/loginservice'
 export class AppComponent implements OnInit {
 
   constructor(
+    private physicsService: PhysicsService,
     private playerService: PlayerUpdate, 
     private mapService: BackgroundService, 
     private mobService: MobService, 
@@ -73,12 +77,18 @@ export class AppComponent implements OnInit {
 
 	}
   
-  attack() {
-    this.playerService.playerAttack();
+  attack(event: any) {
+    
+
   }
 
   @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
-		//this.playerService.movePlayer(event);
+
+    if(event.code == "Space"){
+      this.playerService.playerAttack();
+      this.physicsService.DetectMobHits(this.playerService,this.mobService.currentMobs);
+    }
+
     this.keysPressed[event.keyCode] = true;
 
     

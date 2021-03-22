@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { PlayerUpdate } from '../services/playerupdate';
 import {BackgroundService} from '../services/backgroundservice';
 import {MobService} from '../services/mobservice';
+import {PhysicsService} from '../services/physicsservice';
 import { environment } from 'src/environments/environment';
 
 @NgModule({
@@ -18,7 +19,7 @@ import { environment } from 'src/environments/environment';
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [PlayerUpdate, BackgroundService,MobService],
+  providers: [PlayerUpdate, BackgroundService,MobService,PhysicsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,9 +1,10 @@
 export const Orc = {
     spritePath : "../assets/imgs/Orcs/orcs.png",
-    spritePathLeft : "../assets/imgs/Orcs/orcsleft.png",
+    spritePathLeft : "../assets/imgs/Orcs/orcs2Left.png",
     width: 32,
     height:32,
     numberofFrames:10,
     attackRange:75,
     animationCount:5,
+    attackStrength:.01
 };

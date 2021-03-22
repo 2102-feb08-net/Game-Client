@@ -30,6 +30,7 @@ export class PlayerUpdate {
     maxHealth = 10;
     currentHealth = 10;
     defense = 10;
+    attack = 2;
 
     //Movement and Character State
 
@@ -37,6 +38,8 @@ export class PlayerUpdate {
     isMovingDown = false;
     isMovingRight = false;
     isMovingLeft = false;
+
+    isFacingRight = true;
 
     isAttacking = false;
     isDead = false;
