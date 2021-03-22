@@ -24,7 +24,7 @@ export class Mob {
     maxHealth = 10;
     currentHealth = 10;
     defense = 10;
-    attack = 10;
+    attack = 1;
 
     //Movement and Mob State
 
@@ -35,6 +35,7 @@ export class Mob {
 
     isAttacking = false;
     isDead = false;
+    hasKilled = false;
 
     mobimage : HTMLImageElement = new Image();
     
@@ -61,37 +62,7 @@ export class Mob {
         mobContext.drawImage(this.mobimage,32*Math.floor(this.currentFrame), Orc.height*this.currentRow,Orc.width,Orc.height,this.mob.x,this.mob.y,Orc.width,Orc.height);
     }
 
-    animateMob(){
-        this.currentFrame += .12;
-        
-        if(this.isDead){
-                if(this.currentFrame > 5){
-                    this.currentFrame = 5;
-                }
-                return;
-        }
-        
-        else if(this.isAttacking){
-            this.currentFrame += .12;
-            if(this.currentFrame > 11){
-                this.currentFrame = 0;
-                this.isAttacking = false;
-            }
-            return;
-        }
-        else if(this.isMovingLeft || this.isMovingRight){
-            if(this.currentFrame > 8){
-                this.currentFrame = 0;
-            }
-            return;
-        }
-        else{
-            if(this.currentFrame > 5){
-                this.currentFrame = 0;
-            }
-        }
- 
-    }
+   
   
   getHealthBarLength(){
    
@@ -110,6 +81,10 @@ export class Mob {
 
     if(this.isDead){
         this.currentRow=4
+        return;
+    }
+    else if(this.hasKilled){
+        this.currentRow = 1;
         return;
     }
     else if(this.isAttacking){
@@ -148,6 +123,9 @@ export class Mob {
     }
 
     InitiateAttack(player:any){
+        if(player.isDead){
+            this.hasKilled = true;
+        }
         player.handleHit(this.attack);
         this.isAttacking = true;
     }
