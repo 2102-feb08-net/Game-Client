@@ -24,6 +24,7 @@ export class Mob {
     maxHealth = 10;
     currentHealth = 10;
     defense = 10;
+    attack = 10;
 
     //Movement and Mob State
 
@@ -48,13 +49,15 @@ export class Mob {
     updateFrame(){
         this.currentFrame += .1;
         if(this.currentFrame > Orc.numberofFrames){
+            if(this.isAttacking){
+                this.isAttacking = false;
+            }
             this.currentFrame = 0;
         }
 
     }
 
     drawMob(mobContext: any){
-        console.log(this.currentRow);
         mobContext.drawImage(this.mobimage,32*Math.floor(this.currentFrame), Orc.height*this.currentRow,Orc.width,Orc.height,this.mob.x,this.mob.y,Orc.width,Orc.height);
     }
 
@@ -89,10 +92,6 @@ export class Mob {
         }
  
     }
-
-    playerAttack(){
-    }
-
   
   getHealthBarLength(){
    
@@ -133,13 +132,24 @@ export class Mob {
         this.isMovingRight = false;
     }
 
-    handleMovement(playerposition: Position){
+    handleMovement(player: any){
 
-        let distance = this.calculateDistanceToPlayer(playerposition);
+        console.log(player);
 
-        if(distance < 50){
-            this.moveMobTowardsPlayer(playerposition);
+        let distance = this.calculateDistanceToPlayer(player.player);
+
+        if(distance < 75 && distance > 10){
+            this.moveMobTowardsPlayer(player.player);
         }
+
+        else if (distance <= 10){
+            this.InitiateAttack(player);
+        }
+    }
+
+    InitiateAttack(player:any){
+        player.handleHit(this.attack);
+        this.isAttacking = true;
     }
 
     handleHit(damage: number){
@@ -149,6 +159,7 @@ export class Mob {
         
         if(this.mob.x - Orc.width/2 < position.x){
             this.mob.x += this.mobSpeed;
+            return;
         }
         else{
             this.mob.x -= this.mobSpeed;
@@ -165,9 +176,9 @@ export class Mob {
 
     calculateDistanceToPlayer(position: Position){
 
-        let xdiff = Math.abs(this.mob.x - position.x);
+        let xdiff = Math.abs((this.mob.x -Orc.width/2 ) - position.x);
 
-        let ydiff = Math.abs(this.mob.y - position.y);
+        let ydiff = Math.abs((this.mob.y - Orc.height/2) - position.y);
 
         let ysquared = Math.pow(ydiff, 2);
 

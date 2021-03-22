@@ -22,8 +22,8 @@ export class MobService {
         this.currentMobs.forEach(mob => mob.updateMobContext(mobContext));
     }
 
-    MoveMobs(position:Position){
-        this.currentMobs.forEach(mob => mob.handleMovement(position));
+    MoveMobs(player:any){
+        this.currentMobs.forEach(mob => mob.handleMovement(player));
     }
 
   }
