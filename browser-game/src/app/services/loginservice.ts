@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { Character } from '../interfaces/character';
+import { KillStat } from '../interfaces/killstat';
 import { Player } from '../interfaces/player';
 
 @Injectable({
@@ -14,5 +16,14 @@ export class LoginApiService {
 
   getPlayer(username: string, password: string): Observable<Player> {
     return this.http.get<Player>(`${this.baseUrl}/api/player/${username}/${password}/login`);
+  }
+
+  getCharacter(playerId: number): Observable<Character> {
+    return this.http.get<Character>(`${this.baseUrl}/api/player/${playerId}/character-stats`);
+  }
+
+  //Get a list of killstat of the player.
+  getKillStat(playerId: number): Observable<KillStat[]> {
+    return this.http.get<KillStat[]>(`${this.baseUrl}/api/player/${playerId}/kill-stat`);
   }
 }

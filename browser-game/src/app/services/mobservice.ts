@@ -1,12 +1,19 @@
+import { HttpClient } from '@angular/common/http';
 import {Mob} from '../classes/mob';
 
 import { Position } from '../interfaces/position';
 
 import { Injectable } from '@angular/core';
+import { MobObj } from '../interfaces/mob';
+import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 
 export class MobService {
+    private readonly baseUrl = environment.gameApiBaseUrl;
+
+    constructor(private http: HttpClient){}
 
     currentMobs: Mob[] = [];
 
@@ -14,11 +21,15 @@ export class MobService {
 
         var mob = new Mob(0,0,0);
 
-      //  var mob2 = new Mob(150,100,0);
+        var mob4 = new Mob(200, 100, 2);
 
-        //var mob3 = new Mob(100,50,1);
+        var mob5 = new Mob(250, 100, 3);
 
-        this.currentMobs.push(mob);
+        var mob6 = new Mob(50, 50, 4);
+
+        var mob7 = new Mob(250, 50, 5);
+
+        this.currentMobs.push(mob, mob4, mob5, mob6, mob7);
     }
 
     DrawMobs(mobContext: any){
@@ -30,4 +41,9 @@ export class MobService {
         this.currentMobs.forEach(mob => mob.handleMovement(player));
     }
 
+    getAllMobs(): Observable<MobObj[]> {
+        return this.http.get<MobObj[]>(`${this.baseUrl}/api/mobs`);
+      }
+
+    
   }

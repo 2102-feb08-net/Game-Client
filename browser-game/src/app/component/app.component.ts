@@ -4,7 +4,6 @@ import {BackgroundService} from '../services/backgroundservice';
 import {MobService} from '../services/mobservice';
 import {LoginApiService} from '../services/loginservice';
 import {PhysicsService} from '../services/physicsservice';
-
 import {Position} from '../interfaces/position';
 
 @Component({
@@ -40,14 +39,44 @@ export class AppComponent implements OnInit {
   private mobCanvas: ElementRef | undefined;
   private mobContext: any;
 
+  player: any;
+
+  character: any;
+
   public ngOnInit(){
     this.loginService.getPlayer('hamza@gmail.com', 'password123').subscribe(
       (player) => {
         let playerInfo: string = player.id + ' ' + player.characterId + ' ' + player.username + ' ' + player.password;
         console.log(playerInfo);
+        this.player = {
+          id: player.id,
+          characterId: player.characterId,
+          username: player.username,
+          password: player.password
+        };
       }
     );
+    
+    setTimeout(() => {
+      this.loginService.getCharacter(this.player.id).subscribe(
+        (character) => {
+          let characterInfo: string = character.id + ' ' + character.characterName + ' ' + character.exp + ' ' + character.health
+            + ' ' + character.attack + ' ' + character.defense + ' ' + character.mana;
+          console.log(characterInfo);
+          this.character = {
+            id: character.id,
+            characterName: character.characterName,
+            exp: character.exp,
+            health: character.health,
+            attack: character.attack,
+            defense: character.defense,
+            mana: character.mana,
+          };
+        }
+      );
+    }, 10000);
 
+    
   }
 
   public ngAfterViewInit(){
