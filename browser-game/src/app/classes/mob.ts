@@ -3,7 +3,9 @@ import {Orc} from '../config/OrcConfig';
 
 export class Mob {
 
-    constructor(){
+    constructor(x:number,y:number){
+        this.mob.x=x;
+        this.mob.y=y;
         this.mobimage.height=Orc.height;
         this.mobimage.width = Orc.width;
         this.mobimage.src = Orc.spritePath;
@@ -33,6 +35,9 @@ export class Mob {
     isMovingRight = false;
     isMovingLeft = false;
 
+    velocityXModifier = 1;
+    velocityYModifier = 1;
+
     isAttacking = false;
     isDead = false;
     hasKilled = false;
@@ -59,7 +64,7 @@ export class Mob {
     }
 
     drawMob(mobContext: any){
-        mobContext.drawImage(this.mobimage,32*Math.floor(this.currentFrame), Orc.height*this.currentRow,Orc.width,Orc.height,this.mob.x,this.mob.y,Orc.width,Orc.height);
+        mobContext.drawImage(this.mobimage,32*Math.floor(this.currentFrame), Orc.height*this.currentRow,Orc.width,Orc.height,Math.floor(this.mob.x),Math.floor(this.mob.y),Orc.width,Orc.height);
     }
 
    
@@ -107,17 +112,41 @@ export class Mob {
         this.isMovingRight = false;
     }
 
-    handleMovement(player: any){
+    calculateVelocityModifier(playerlocation:Position){
+        
+        let xdiff = Math.abs(this.mob.x - playerlocation.x);
 
-        console.log(player);
+        let ydiff = Math.abs(this.mob.y - playerlocation.y);
+
+        let totaldiff = xdiff + ydiff;
+
+
+        this.velocityXModifier = this.mobSpeed*xdiff/totaldiff;
+
+        this.velocityYModifier = this.mobSpeed*ydiff/totaldiff;
+
+        if(this.velocityYModifier < .2){
+            this.velocityYModifier = .2;
+        }
+        else if(this.velocityXModifier < .2){
+            this.velocityXModifier =.2;
+        }
+
+        
+
+    }
+
+    handleMovement(player: any){
 
         let distance = this.calculateDistanceToPlayer(player.player);
 
-        if(distance < 75 && distance > 10){
+        this.calculateVelocityModifier(player.player);
+
+        if(distance < Orc.attackRange && distance > 10){
             this.moveMobTowardsPlayer(player.player);
         }
 
-        else if (distance <= 10){
+        else if (distance <= 15){
             this.InitiateAttack(player);
         }
     }
@@ -136,18 +165,17 @@ export class Mob {
     moveMobTowardsPlayer(position: Position){
         
         if(this.mob.x - Orc.width/2 < position.x){
-            this.mob.x += this.mobSpeed;
-            return;
+            this.mob.x += this.mobSpeed*this.velocityXModifier;
         }
         else{
-            this.mob.x -= this.mobSpeed;
+            this.mob.x -= this.mobSpeed*this.velocityXModifier;
         }
 
         if(this.mob.y - Orc.height/2 < position.y){
-            this.mob.y += this.mobSpeed;
+            this.mob.y += this.mobSpeed*this.velocityYModifier;
         }
         else{
-            this.mob.y -= this.mobSpeed;
+            this.mob.y -= this.mobSpeed*this.velocityYModifier;
         }
     }
 

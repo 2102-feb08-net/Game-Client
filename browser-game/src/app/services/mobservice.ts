@@ -12,9 +12,13 @@ export class MobService {
 
     DeclareConfig(){
 
-        var mob = new Mob();
+        var mob = new Mob(50,100);
 
-        this.currentMobs.push(mob);
+        var mob2 = new Mob(150,100);
+
+        var mob3 = new Mob(100,50);
+
+        this.currentMobs.push(mob,mob2,mob3);
     }
 
     DrawMobs(mobContext: any){
