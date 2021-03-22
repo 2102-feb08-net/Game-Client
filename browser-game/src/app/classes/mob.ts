@@ -147,14 +147,14 @@ export class Mob {
     }
     moveMobTowardsPlayer(position: Position){
         
-        if(this.mob.x < position.x){
+        if(this.mob.x - Orc.width/2 < position.x){
             this.mob.x += this.mobSpeed;
         }
         else{
             this.mob.x -= this.mobSpeed;
         }
 
-        if(this.mob.y < position.y){
+        if(this.mob.y - Orc.height/2 < position.y){
             this.mob.y += this.mobSpeed;
         }
         else{
