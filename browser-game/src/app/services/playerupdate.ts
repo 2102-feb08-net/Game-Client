@@ -81,7 +81,6 @@ export class PlayerUpdate {
         }
         this.isAttacking = true;
         this.currentFrame = 0;
-        this.handleHit(1);
     }
 
 
