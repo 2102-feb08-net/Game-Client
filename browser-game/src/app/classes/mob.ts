@@ -10,6 +10,9 @@ export class Mob {
         this.mobimage.height=Orc.height;
         this.mobimage.width = Orc.width;
         this.mobimage.src = Orc.spritePath;
+        this.mobimageLeft.src = Orc.spritePathLeft;
+        this.mobimageLeft.height=Orc.height;
+        this.mobimageLeft.width = Orc.width;
     }
 
     mob: Position = {
@@ -33,6 +36,7 @@ export class Mob {
     //Movement and Mob State
 
     isMoving = false;
+    isFacingLeft = false;
 
     velocityXModifier = 1;
     velocityYModifier = 1;
@@ -42,6 +46,7 @@ export class Mob {
     hasKilled = false;
 
     mobimage : HTMLImageElement = new Image();
+    mobimageLeft : HTMLImageElement = new Image();
     
     updateMobContext(mobContext: any){
 
@@ -63,7 +68,17 @@ export class Mob {
     }
 
     drawMob(mobContext: any){
-        mobContext.drawImage(this.mobimage,32*Math.floor(this.currentFrame), Orc.height*this.currentRow + Orc.width*Orc.animationCount*this.Id,Orc.width,Orc.height,Math.floor(this.mob.x),Math.floor(this.mob.y),Orc.width,Orc.height);
+
+        var image;
+
+        if(this.isFacingLeft){
+            image = this.mobimageLeft;
+        }
+        else{
+            image = this.mobimage;
+        }
+
+        mobContext.drawImage(image,32*Math.floor(this.currentFrame), Orc.height*this.currentRow + Orc.width*Orc.animationCount*this.Id,Orc.width,Orc.height,Math.floor(this.mob.x),Math.floor(this.mob.y),Orc.width,Orc.height);
     }
 
    
@@ -129,13 +144,25 @@ export class Mob {
 
     }
 
+    handleDirection(playerPosition:Position){
+        if(this.mob.x <= playerPosition.x){
+            this.isFacingLeft = false;
+        }
+        else{
+            this.isFacingLeft = true;
+        }
+    }
+
+
     handleMovement(player: any){
 
         let distance = this.calculateDistanceToPlayer(player.player);
 
+        this.handleDirection(player.player);
+
         this.calculateVelocityModifier(player.player);
 
-        if(distance < Orc.attackRange && distance > 10){
+        if(distance < Orc.attackRange && distance > 5){
             this.isMoving = true;
             this.moveMobTowardsPlayer(player.player);
         }
