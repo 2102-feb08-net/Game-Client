@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  gameApiBaseUrl: "https://localhost:44332"
+  emailApiBaseUrl: 'https://reventure-game-server.azurewebsites.net/'
 };
