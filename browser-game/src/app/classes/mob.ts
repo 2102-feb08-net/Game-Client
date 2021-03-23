@@ -48,10 +48,10 @@ export class Mob {
     mobimage : HTMLImageElement = new Image();
     mobimageLeft : HTMLImageElement = new Image();
     
-    updateMobContext(mobContext: any){
+    updateMobContext(mobContext: any, mapService: any){
 
         this.pickImage();
-        this.drawMob(mobContext);
+        this.drawMob(mobContext,mapService);
         this.updateFrame();
 
     }
@@ -71,7 +71,7 @@ export class Mob {
 
     }
 
-    drawMob(mobContext: any){
+    drawMob(mobContext: any,mapService:any){
 
         var image;
 
@@ -84,17 +84,23 @@ export class Mob {
 
         mobContext.imageSmoothingEnabled = false;
 
+
+
+        //Draw Mob Himself
+
+        let xlocation = Math.floor(this.mob.x - mapService.viewPort.x);
+
+        let ylocation = Math.floor(this.mob.y - mapService.viewPort.y);
+
+        mobContext.drawImage(image,32*Math.floor(this.currentFrame), Orc.height*this.currentRow + Orc.width*Orc.animationCount*this.Id,Orc.width,Orc.height,xlocation,ylocation,Orc.width,Orc.height);
+
         //Draw Mobs Healthbar
 
         let healthbarlength = this.getHealthBarLength();
 
         mobContext.fillStyle = '#990000';
-
-        mobContext.fillRect(this.mob.x + 5, this.mob.y + Orc.height,healthbarlength , 1.5);
-
-        //Draw Mob Himself
-
-        mobContext.drawImage(image,32*Math.floor(this.currentFrame), Orc.height*this.currentRow + Orc.width*Orc.animationCount*this.Id,Orc.width,Orc.height,Math.floor(this.mob.x),Math.floor(this.mob.y),Orc.width,Orc.height);
+        
+        mobContext.fillRect(xlocation + 5, ylocation + Orc.height,healthbarlength , 1.5);
     }
 
    

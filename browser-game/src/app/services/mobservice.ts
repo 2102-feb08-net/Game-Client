@@ -32,9 +32,9 @@ export class MobService {
         this.currentMobs.push(mob, mob4, mob5, mob6, mob7);
     }
 
-    DrawMobs(mobContext: any){
+    DrawMobs(mobContext: any,mapService:any){
         mobContext.clearRect(0,0,window.innerWidth,window.innerHeight);
-        this.currentMobs.forEach(mob => mob.updateMobContext(mobContext));
+        this.currentMobs.forEach(mob => mob.updateMobContext(mobContext,mapService));
     }
 
     MoveMobs(player:any){

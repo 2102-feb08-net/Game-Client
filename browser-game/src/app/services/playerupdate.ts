@@ -122,8 +122,7 @@ export class PlayerUpdate {
         let healthbarlength = this.getHealthBarLength();
         let centerwidth = playerContext.canvas.width/2 -this.image.width/2;
         let centerheight = playerContext.canvas.height/2 -this.image.height/2;
-        debugger;
-        playerContext.fillRect(this.player.x+21, this.player.y+22,healthbarlength , 1.5);
+        playerContext.fillRect(centerwidth+21, centerheight+22,healthbarlength , 1.5);
         playerContext.drawImage(this.image,0,46*Math.floor(this.currentFrame),64,46,centerwidth,centerheight,this.playerWidth,this.playerHeight);
   }
   
