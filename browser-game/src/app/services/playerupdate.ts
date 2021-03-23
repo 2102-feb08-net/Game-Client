@@ -20,7 +20,7 @@ export class PlayerUpdate {
     //Fields Related to Character Sprite
 
     currentFrame = 0;
-    playerSpeed = 3;
+    playerSpeed = 1;
     playerWidth = 64;
     playerHeight = 46;
 
@@ -115,6 +115,7 @@ export class PlayerUpdate {
     updatePlayerContext(playerContext: any){
         this.pickImage();
         this.animatePlayer();
+        playerContext.imageSmoothingEnabled = false;
         playerContext.clearRect(0, 0, window.innerWidth, window.innerHeight);
         playerContext.clearRect(0, 0, window.innerWidth, window.innerHeight);
         playerContext.fillStyle = 'Red';

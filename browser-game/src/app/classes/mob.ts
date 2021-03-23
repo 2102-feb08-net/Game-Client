@@ -82,6 +82,8 @@ export class Mob {
             image = this.mobimage;
         }
 
+        mobContext.imageSmoothingEnabled = false;
+
         //Draw Mobs Healthbar
 
         let healthbarlength = this.getHealthBarLength();
@@ -169,7 +171,7 @@ export class Mob {
 
 
     handleMovement(player: any){
-        
+
         if(this.isDead){
             return;
         }
