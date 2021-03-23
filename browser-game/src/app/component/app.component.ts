@@ -4,6 +4,7 @@ import {BackgroundService} from '../services/backgroundservice';
 import {MobService} from '../services/mobservice';
 import {LoginApiService} from '../services/loginservice';
 import {PhysicsService} from '../services/physicsservice';
+import {ItemService} from '../services/itemservice';
 import {Position} from '../interfaces/position';
 
 @Component({
@@ -17,7 +18,8 @@ export class AppComponent implements OnInit {
     private physicsService: PhysicsService,
     private playerService: PlayerUpdate, 
     private mapService: BackgroundService, 
-    private mobService: MobService, 
+    private mobService: MobService,
+    private itemService: ItemService, 
     private loginService: LoginApiService){}
 
   title = 'browser-game';
@@ -38,6 +40,10 @@ export class AppComponent implements OnInit {
   @ViewChild("mobcanvas")
   private mobCanvas: ElementRef | undefined;
   private mobContext: any;
+
+  @ViewChild("itemcanvas")
+  private itemCanvas: ElementRef | undefined;
+  private itemContext: any;
 
   player: any;
 
@@ -89,6 +95,10 @@ export class AppComponent implements OnInit {
 
     this.mobContext = this.mobCanvas?.nativeElement.getContext("2d");
 
+    this.itemContext = this.itemCanvas?.nativeElement.getContext("2d");
+
+    this.itemService.drawItem(this.itemContext);
+
     this.startGameLoop();
 
     this.mobService.DeclareConfig();
@@ -102,6 +112,7 @@ export class AppComponent implements OnInit {
     this.mapService.loadMapContext(this.mapContext,this.playerService.player);
     this.mobService.DrawMobs(this.mobContext);
     this.mobService.MoveMobs(this.playerService);
+    this.itemService.drawItem(this.itemContext);
 		}, 15);
 
 	}
