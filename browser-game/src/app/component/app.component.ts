@@ -107,7 +107,7 @@ export class AppComponent implements OnInit {
 
 	startGameLoop() {
 		this.gameLoop = setInterval(() => {
-    this.playerService.updatePlayerContext(this.playercontext);
+    this.playerService.updatePlayerContext(this.playercontext,this.mapService);
     this.playerService.movePlayer(this.keysPressed,this.mapService);
     this.mapService.loadMapContext(this.mapContext,this.playerService.player);
     this.mobService.DrawMobs(this.mobContext,this.mapService);
