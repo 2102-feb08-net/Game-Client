@@ -6,6 +6,7 @@ import {LoginApiService} from '../services/loginservice';
 import {PhysicsService} from '../services/physicsservice';
 import {ItemService} from '../services/itemservice';
 import {Position} from '../interfaces/position';
+import { Weapon } from '../interfaces/weapon';
 
 @Component({
   selector: 'app-root',
@@ -82,6 +83,13 @@ export class AppComponent implements OnInit {
       );
     }, 15000);
 
+    this.mobService.getLoot(1).subscribe(
+      (weapon) => {
+        let weaponInfo: string = weapon.id + ' ' + weapon.name + ' ' + weapon.description + ' ' + weapon.damage + ' ' + weapon.attackSpeed
+          + ' ' + weapon.levelRequirement + ' ' + weapon.rarity;
+        console.log(weaponInfo);
+      }
+    );
     
   }
 

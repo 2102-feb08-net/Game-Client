@@ -7,6 +7,7 @@ import { Injectable } from '@angular/core';
 import { MobObj } from '../interfaces/mob';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { Weapon } from '../interfaces/weapon';
 
 @Injectable()
 
@@ -45,5 +46,7 @@ export class MobService {
         return this.http.get<MobObj[]>(`${this.baseUrl}/api/mobs`);
       }
 
-    
+    getLoot(mobId: number): Observable<Weapon> {
+        return this.http.get<Weapon>(`${this.baseUrl}/api/mobs/loot/${mobId}`);
+    }
   }
