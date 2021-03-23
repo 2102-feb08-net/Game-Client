@@ -3,3 +3,14 @@ canvas {
   height: 700;
   margin: auto;
 }
+
+.uibutton {
+  background-color: dimgrey;
+  border: none;
+  color: white;
+  text-align: center;
+  display: inline-block;
+  font-size: 12px;
+  margin: 4px 2px;
+  border-radius: 4px;
+}
