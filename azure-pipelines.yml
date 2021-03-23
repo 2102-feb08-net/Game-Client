@@ -22,7 +22,7 @@ steps:
   displayName: npm install
   workingDirectory: $(appDirectory)
 
-- script: npx ng build
+- script: npx ng build --prod
   displayName: ng build
   workingDirectory: $(appDirectory)
 
@@ -56,11 +56,11 @@ steps:
 #   inputs:
 #     pollingTimeoutSec: '300'
 
-# - task: AzureRmWebAppDeployment@4
-#   displayName: app service deploy
-#   inputs:
-#     ConnectionType: 'AzureRM'
-#     azureSubscription: 'Training(0c61e2ed-4a6a-437f-9a03-1f223527220b)'
-#     appType: 'webApp'
-#     WebAppName: '2102-escalona-email-ui'
-#     packageForLinux: '$(appDirectory)/dist/email-ui'
+- task: AzureRmWebAppDeployment@4
+  displayName: app service deploy
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Azure subscription 1(3e792589-b827-44e5-ba34-118283388b43)'
+    appType: 'webApp'
+    WebAppName: 'reventure-game-client'
+    packageForLinux: '$(appDirectory)/dist/browser-game'
