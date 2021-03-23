@@ -31,7 +31,7 @@ export class Mob {
     maxHealth = 10;
     currentHealth = 10;
     defense = 10;
-    attack = .001;
+    attack = .1;
 
     //Movement and Mob State
 
