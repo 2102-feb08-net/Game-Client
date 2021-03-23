@@ -85,7 +85,7 @@ export class AppComponent implements OnInit {
 
     this.mapContext = this.gameMap?.nativeElement.getContext("2d");
 
-    this.mapService.loadMapContext(this.mapContext);
+    this.mapService.loadMapContext(this.mapContext,this.playerService.player);
 
     this.mobContext = this.mobCanvas?.nativeElement.getContext("2d");
 
@@ -99,7 +99,7 @@ export class AppComponent implements OnInit {
 		this.gameLoop = setInterval(() => {
     this.playerService.updatePlayerContext(this.playercontext);
     this.playerService.movePlayer(this.keysPressed);
-    this.mapService.loadMapContext(this.mapContext);
+    this.mapService.loadMapContext(this.mapContext,this.playerService.player);
     this.mobService.DrawMobs(this.mobContext);
     this.mobService.MoveMobs(this.playerService);
 		}, 15);

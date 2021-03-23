@@ -1,5 +1,6 @@
 import {BackgroundMap} from '../interfaces/backgroundmap';
 import {Injectable, Input} from '@angular/core';
+import { Position } from '@angular/compiler';
 
 @Injectable()
 
@@ -55,10 +56,10 @@ export class BackgroundService {
     // Generate Map
     tileLayer: any;
 
-    generateMap(mapContext: any) {
+    generateMap(mapContext: any,player:any) {
         for (let i = 0; i < this.map.rows; i++) {
             for(let j = 0; j < this.map.columns; j++) {
-                mapContext.drawImage(this.tile, (this.tileLayer[0][i*this.map.columns+j] - 1)*16, (this.tileLayer[0][i*this.map.columns] - 1)*16, 16, 16, (this.tilex+j) * 16, (this.tiley+i) * 16, this.tile.width, this.tile.height);
+                mapContext.drawImage(this.tile, (this.tileLayer[0][i*this.map.columns+j] - 1)*16, (this.tileLayer[0][i*this.map.columns] - 1)*16, 16, 16, (this.tilex+j) * 16 + player.x, (this.tiley+i) * 16 + player.y, this.tile.width, this.tile.height);
             }
         }
         mapContext.save();
@@ -66,8 +67,9 @@ export class BackgroundService {
     }
 
     // Load map
-    loadMapContext(mapContext: any){
-        let mapState = this.generateMap(mapContext);
+    loadMapContext(mapContext: any,player: any){
+        let mapState = this.generateMap(mapContext,player);
+        console.log(player);
         mapState.restore();
     }
 
