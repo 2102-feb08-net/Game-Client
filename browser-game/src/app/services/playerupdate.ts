@@ -87,7 +87,7 @@ export class PlayerUpdate {
     }
 
 
-    movePlayer(keyCodes: { [key: number]: boolean }): void {
+    movePlayer(keyCodes: { [key: number]: boolean },mapService: any): void {
 
         if(this.isDead){
             return;
@@ -108,7 +108,7 @@ export class PlayerUpdate {
            this.isMovingRight = true;
         }
 
-        this.handleMovement();
+        this.handleMovement(mapService);
 
   }
 
@@ -120,8 +120,11 @@ export class PlayerUpdate {
         playerContext.clearRect(0, 0, window.innerWidth, window.innerHeight);
         playerContext.fillStyle = 'Red';
         let healthbarlength = this.getHealthBarLength();
+        let centerwidth = playerContext.canvas.width/2 -this.image.width/2;
+        let centerheight = playerContext.canvas.height/2 -this.image.height/2;
+        debugger;
         playerContext.fillRect(this.player.x+21, this.player.y+22,healthbarlength , 1.5);
-        playerContext.drawImage(this.image,0,46*Math.floor(this.currentFrame),64,46,this.player.x,this.player.y,this.playerWidth,this.playerHeight);
+        playerContext.drawImage(this.image,0,46*Math.floor(this.currentFrame),64,46,centerwidth,centerheight,this.playerWidth,this.playerHeight);
   }
   
   getHealthBarLength(){
@@ -165,19 +168,23 @@ export class PlayerUpdate {
         this.isMovingRight = false;
     }
 
-    handleMovement(){
+    handleMovement(mapService:any){
 
         if(this.isMovingLeft){
-            this.player.x -= this.playerSpeed;
+            mapService.viewPort.x -= this.playerSpeed;
+         //   this.player.x -= this.playerSpeed;
         }
         if(this.isMovingDown){
-            this.player.y += this.playerSpeed;
+            mapService.viewPort.y +=this.playerSpeed;
+           // this.player.y += this.playerSpeed;
         }
         if(this.isMovingRight){
-            this.player.x += this.playerSpeed;
+            mapService.viewPort.x +=this.playerSpeed;
+           // this.player.x += this.playerSpeed;
         }
         if(this.isMovingUp){
-            this.player.y -= this.playerSpeed;
+            mapService.viewPort.y -=this.playerSpeed;
+          //  this.player.y -= this.playerSpeed;
         }
 
     }
