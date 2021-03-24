@@ -21,7 +21,7 @@ export class MobService {
 
     DeclareConfig(){
 
-        var mob = new Mob(0,0,0);
+        var mob = new Mob(0,0,1);
 
         var mob4 = new Mob(200, 100, 2);
 
@@ -44,12 +44,13 @@ export class MobService {
         this.currentMobs.forEach(mob => mob.handleMovement(player));
         for(let i = 0; i < this.currentMobs.length;i++){
             if(this.currentMobs[i].hasBeenLooted){
-            
-
-        
+                this.getLoot(this.currentMobs[i].Id).subscribe(
+                    (weapon) => {
+                        player.Inventory.push(weapon);
+                        console.log(player.Inventory);
+                    })
                 this.currentMobs.splice(i,1);
-       
-                
+           
             }
         }
     }

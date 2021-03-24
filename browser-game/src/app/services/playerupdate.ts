@@ -32,6 +32,10 @@ export class PlayerUpdate {
     defense = 10;
     attack = 2;
 
+    //Inventory Information
+
+    Inventory = [];
+
     //Movement and Character State
 
     isMovingUp = false;
