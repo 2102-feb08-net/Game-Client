@@ -193,10 +193,25 @@ export class AppComponent implements OnInit {
   }
   
   toggleStats(): void{
+    this.loginService.getPlayer('hamza@gmail.com', 'password123').subscribe(
+      (player) => {
+        this.player = player;
+        this.loginService.getCharacter(this.player.id).subscribe(
+          (character) => {
+            this.character = character;
+          }
+        );
+      }
+    );
     this.showStats = !this.showStats;
   }
 
   toggleLeaderBoard(): void{
+    this.loginService.getLeaderboard().subscribe(
+      (characters) => {
+        this.leaderBoard = characters;
+      }
+    );
     this.showLeaderBoard = !this.showLeaderBoard;
   }
 
