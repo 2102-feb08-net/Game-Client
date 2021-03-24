@@ -18,7 +18,7 @@ style="position: absolute; top: 10px; left: 10px; z-index: 2;"
 
 <span #uimenu *ngIf="showUI" style="position: absolute; top:10px; left:15px; z-index: 4; background-color: black;">
     <form>
-        <input class="uibutton" type="button" value="Status">
+        <input class="uibutton" type="button" value="Status" (click)="toggleStats()">
         <input class="uibutton" type="button" value="Highscore">
         <input class="uibutton" type="button" value="LogIn" (click)="login()">
         <input class="uibutton" type="button" value="LogOut" (click)="logout()">
@@ -29,3 +29,14 @@ style="position: absolute; top: 10px; left: 10px; z-index: 2;"
 <span id="ui-toggle" style="position: absolute; top:10px; left:500px; z-index: 4; background-color: black;">
     <button (click)="toggleUI()">UI</button>
 </span>
+
+<div id="status" *ngIf="character && showStats" style="position: absolute; top:100px; left:500px; z-index: 4; background-color: grey; color: white;">
+    <b>Stats</b>
+    <br><br>
+    <b>Name:</b> {{character.characterName}} <br>
+    <b>Exp:</b> {{character.exp}} <br>
+    <b>Health:</b> {{character.health}} <br>
+    <b>Attack:</b> {{character.attack}} <br>
+    <b>Defense:</b> {{character.defense}} <br>
+    <b>Mana:</b> {{character.mana}} <br>
+</div>

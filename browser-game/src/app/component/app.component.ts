@@ -9,6 +9,8 @@ import {PhysicsService} from '../services/physicsservice';
 import {ItemService} from '../services/itemservice';
 import {Position} from '../interfaces/position';
 import { Weapon } from '../interfaces/weapon';
+import { Character } from '../interfaces/character';
+import { Player } from '../interfaces/player';
 
 @Component({
   selector: 'app-root',
@@ -49,11 +51,12 @@ export class AppComponent implements OnInit {
   private itemCanvas: ElementRef | undefined;
   private itemContext: any;
 
-  player: any;
-  character: any;
+  player: Player | null = null;
+  character: Character | null = null;
   isAuthenticated = false;
   user: UserClaims | null = null;
   showUI = true;
+  showStats = false;
 
   public ngOnInit(){
     this.loginService.getPlayer('hamza@gmail.com', 'password123').subscribe(
@@ -104,6 +107,10 @@ export class AppComponent implements OnInit {
         this.oktaAuth.getUser().then((user) => (this.user = user));
       }
     });
+
+    setTimeout(() => {
+      console.log(this.character);
+    }, 10000);
     
   }
 
@@ -171,6 +178,10 @@ export class AppComponent implements OnInit {
 
   toggleUI(): void{
     this.showUI = !this.showUI;
+  }
+  
+  toggleStats(): void{
+    this.showStats = !this.showStats;
   }
 
 }
