@@ -27,7 +27,6 @@ export class MobService {
 
         this.getAllMobs().subscribe(
             (mobs) => {
-                console.log(mobs);
                 mobs.forEach((mob) => {
                     console.log(mob);
                     this.allMobs.push(new Mob(Math.random()*200,Math.random()*200,mob.id-1 ,mob.attack,mob.defense,mob.exp))
@@ -63,18 +62,21 @@ export class MobService {
         this.currentMobs.forEach(mob => mob.handleMovement(player));
         for(let i = 0; i < this.currentMobs.length;i++){
             if(this.currentMobs[i].hasBeenLooted){
-                this.getLoot(this.currentMobs[i].Id).subscribe(
-                    (weapon) => {
-                        player.Inventory.push(weapon);
-                    });
+        
+                    this.getLoot(this.currentMobs[i].Id).subscribe(
+                        (weapon) => {
+                            player.Inventory.push(weapon);
+                        });
+                    
+                    console.log('player: ' + player.Id);
+                    console.log('exp: ' + this.currentMobs[i].exp);
+                    loginservice.updateExp(player.Id, this.currentMobs[i].exp).subscribe(
+                        (character) => {
+                            console.log(character);
+                        }
+                    );
                 
-                console.log('player: ' + player.Id);
-                console.log('exp: ' + this.currentMobs[i].exp);
-                loginservice.updateExp(player.Id, this.currentMobs[i].exp).subscribe(
-                    (character) => {
-                        console.log(character);
-                    }
-                );
+               
                 this.currentMobs.splice(i,1);
             }
         }

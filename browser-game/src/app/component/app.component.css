@@ -1,12 +1,12 @@
-body{
-  width:1600px;
-  height: 786px;
-  background-color: gray;
+body {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgb(76, 75, 75);
   position: absolute;
   z-index: -3;
 }
 
-.canvasbackground{
+.canvasbackground {
   background-color: white;
   color: white;
   width: 1000px;
@@ -14,8 +14,8 @@ body{
   margin: auto;
   position: absolute;
   z-index: -1;
-  left:300px;
-  top:100px;
+  left: 300px;
+  top: 100px;
 }
 
 canvas {
@@ -26,11 +26,32 @@ canvas {
 
 .uibutton {
   background-color: dimgrey;
-  border: none;
   color: white;
   text-align: center;
   display: inline-block;
   font-size: 12px;
-  margin: 4px 2px;
+  margin: 4px 4px;
+  padding-left: 3px;
+  padding-right: 3px;
   border-radius: 4px;
+}
+
+.uibutton:hover {
+  background-color: rgb(46, 45, 45);
+}
+
+.openUI {
+  padding: 2px;
+  width: 10px;
+}
+
+.characterStats {
+  background-color: darkgray;
+  padding: 10px;
+  border: 1px solid black;
+}
+
+.characterStatsTitle {
+  font-size: larger;
+  text-align: center;
 }
