@@ -55,8 +55,10 @@ export class AppComponent implements OnInit {
   character: Character | null = null;
   isAuthenticated = false;
   user: UserClaims | null = null;
+  leaderBoard: Character[] | null = null;
   showUI = true;
   showStats = false;
+  showLeaderBoard = false;
 
   public ngOnInit(){
     this.loginService.getPlayer('hamza@gmail.com', 'password123').subscribe(
@@ -92,6 +94,12 @@ export class AppComponent implements OnInit {
       }
     );
 
+    this.loginService.getLeaderboard().subscribe(
+      (characters) => {
+        this.leaderBoard = characters;
+      }
+    )
+
 
     this.oktaAuth.$authenticationState.subscribe((isAuthenticated) => {
       this.isAuthenticated = isAuthenticated;
@@ -100,10 +108,6 @@ export class AppComponent implements OnInit {
 
       }
     });
-
-    setTimeout(() => {
-      console.log(this.character);
-    }, 10000);
     
   }
 
@@ -190,6 +194,10 @@ export class AppComponent implements OnInit {
   
   toggleStats(): void{
     this.showStats = !this.showStats;
+  }
+
+  toggleLeaderBoard(): void{
+    this.showLeaderBoard = !this.showLeaderBoard;
   }
 
 }

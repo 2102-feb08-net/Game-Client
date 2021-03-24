@@ -19,11 +19,11 @@ style="position: absolute; top: 10px; left: 10px; z-index: 2;"
 
 <span #uimenu *ngIf="showUI" style="position: absolute; top:10px; left:15px; z-index: 4; background-color: black;">
     <form>
-        <input class="uibutton" type="button" value="Status" (click)="toggleStats()">
-        <input class="uibutton" type="button" value="Highscore">
+        <input class="uibutton" type="button" value="Stats" (click)="toggleStats()">
+        <input class="uibutton" type="button" value="Leaderboard" (click)="toggleLeaderBoard()">
         <input class="uibutton" type="button" value="LogIn" (click)="login()">
         <input class="uibutton" type="button" value="LogOut" (click)="logout()">
-        <input class="uibutton" type="button" value="X">
+        <input class="uibutton" type="button" value="X" (click)="toggleUI()">
     </form>
 </span>
 
@@ -40,4 +40,23 @@ style="position: absolute; top: 10px; left: 10px; z-index: 2;"
     <b>Attack:</b> {{character.attack}} <br>
     <b>Defense:</b> {{character.defense}} <br>
     <b>Mana:</b> {{character.mana}} <br>
+</div>
+
+<div id="leaderboard" *ngIf="leaderBoard && showLeaderBoard" style="position: absolute; top:100px; left:500px; z-index: 4; background-color: grey; color: white;">
+    <b>Leaderboard</b>
+    <br><br>
+    <table>
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Exp</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let character of leaderBoard">
+                <td>{{character.characterName}}</td>
+                <td>{{character.exp}}</td>
+            </tr>
+        </tbody>
+    </table>
 </div>
