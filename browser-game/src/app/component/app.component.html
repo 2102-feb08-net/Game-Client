@@ -16,9 +16,15 @@
         style="position: absolute; z-index: 2;"
         ></canvas>
         
+        <span id="ui-toggle" style="position: absolute;  z-index: 3;" class="openUI"> 
+            <button (click)="toggleUI()">
+                +
+            </button>
+        </span>
         
         
         <span #uimenu *ngIf="showUI" style="position: absolute; z-index: 4; background-color: black;">
+                    
             <form>
                 <input class="uibutton" type="button" value="Stats" (click)="toggleStats()">
                 <input class="uibutton" type="button" value="Leaderboard" (click)="toggleLeaderBoard()">
@@ -27,13 +33,10 @@
                 <input class="uibutton" type="button" value="X" (click)="toggleUI()">
             </form>
         </span>
+
         
-        <span id="ui-toggle" style="position: absolute; left:500px; z-index: 4; background-color: black;">
-            <button (click)="toggleUI()">UI</button>
-        </span>
-        
-        <div id="status" *ngIf="character && showStats" style="position: absolute; top:100px; left:500px; z-index: 4; background-color: grey; color: white;">
-            <b>Stats</b>
+        <div id="status" *ngIf="character && showStats" style="position: absolute; top:100px; left:500px; z-index: 4;" class="characterStats">
+            <b class="characterStatsTitle">Stats</b>
             <br><br>
             <b>Name:</b> {{character.characterName}} <br>
             <b>Exp:</b> {{character.exp}} <br>
@@ -43,7 +46,7 @@
             <b>Mana:</b> {{character.mana}} <br>
         </div>
         
-        <div id="leaderboard" *ngIf="leaderBoard && showLeaderBoard" style="position: absolute; top:100px; left:500px; z-index: 4; background-color: grey; color: white;">
+        <div id="leaderboard" *ngIf="leaderBoard && showLeaderBoard" style="position: absolute; top:100px; left:500px; z-index: 4;" class="characterStats">
             <b>Leaderboard</b>
             <br><br>
             <table>
