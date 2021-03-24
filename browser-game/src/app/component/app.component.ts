@@ -80,6 +80,11 @@ export class AppComponent implements OnInit {
               defense: character.defense,
               mana: character.mana,
             };
+            this.playerService.username = character.characterName;
+            this.playerService.maxHealth = character.health;
+            this.playerService.currentHealth = character.health;
+            this.playerService.defense = character.defense;
+            this.playerService.attack = character.attack;
           }
         );
       }
@@ -104,22 +109,23 @@ export class AppComponent implements OnInit {
 
   public ngAfterViewInit(){
 
-    this.playercontext = this.playerCanvas?.nativeElement.getContext("2d");
+    setTimeout(() => {
+      this.playercontext = this.playerCanvas?.nativeElement.getContext("2d");
 
-    this.mapContext = this.gameMap?.nativeElement.getContext("2d");
-
-    this.mapService.loadMapContext(this.mapContext,this.playerService.player);
-
-    this.mobContext = this.mobCanvas?.nativeElement.getContext("2d");
-
-    this.itemContext = this.itemCanvas?.nativeElement.getContext("2d");
-
-    this.itemService.drawItem(this.itemContext);
-
-    this.startGameLoop();
-
-    this.mobService.DeclareConfig();
-
+      this.mapContext = this.gameMap?.nativeElement.getContext("2d");
+  
+      this.mapService.loadMapContext(this.mapContext,this.playerService.player);
+  
+      this.mobContext = this.mobCanvas?.nativeElement.getContext("2d");
+  
+      this.itemContext = this.itemCanvas?.nativeElement.getContext("2d");
+  
+      this.itemService.drawItem(this.itemContext);
+  
+      this.startGameLoop();
+  
+      this.mobService.DeclareConfig();
+    }, 10000);
   }
 
 	startGameLoop() {
@@ -159,6 +165,7 @@ export class AppComponent implements OnInit {
   }
 
   logout(): void {
+    //this.oktaAuth.tokenManager.clear();
     this.oktaAuth.signOut();
   }
 
