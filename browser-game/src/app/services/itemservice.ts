@@ -16,6 +16,6 @@ export class ItemService{
     itemY = 50;
 
     drawItem(itemContext: any){
-        itemContext.drawImage(this.itemImage, 0, 0, 16, 16, this.itemX, this.itemY, 10, 10);
+
     }
 }

@@ -120,8 +120,7 @@ export class AppComponent implements OnInit {
     this.mapService.loadMapContext(this.mapContext,this.playerService.player);
     this.mobService.DrawMobs(this.mobContext,this.mapService);
     this.mobService.MoveMobs(this.playerService);
-    this.itemService.drawItem(this.itemContext);
-		}, 15);
+		},15 );
 
 	}
   

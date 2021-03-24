@@ -7,6 +7,9 @@ export class Mob {
         this.Id = id;
         this.mob.x=x;
         this.mob.y=y;
+        this.lootimage.height = 16;
+        this.lootimage.width = 16;
+        this.lootimage.src = Orc.lootspritePath;
         this.mobimage.height=Orc.height;
         this.mobimage.width = Orc.width;
         this.mobimage.src = Orc.spritePath;
@@ -44,7 +47,10 @@ export class Mob {
     isAttacking = false;
     isDead = false;
     hasKilled = false;
+    hasBeenLooted = false;
+    
 
+    lootimage : HTMLImageElement = new Image();
     mobimage : HTMLImageElement = new Image();
     mobimageLeft : HTMLImageElement = new Image();
     
@@ -74,6 +80,7 @@ export class Mob {
     drawMob(mobContext: any,mapService:any){
 
         var image;
+        var lootimage = this.lootimage;
 
         if(this.isFacingLeft){
             image = this.mobimageLeft;
@@ -101,6 +108,13 @@ export class Mob {
         mobContext.fillStyle = '#990000';
         
         mobContext.fillRect(xlocation + 5, ylocation + Orc.height,healthbarlength , 1.5);
+
+        //Draw Loot if he is dead
+
+        if(this.isDead && !this.hasBeenLooted){
+            mobContext.drawImage(this.lootimage,0,0 ,64,64,xlocation+5,ylocation+Orc.height-10,16,16);
+        }
+  
     }
 
    
@@ -178,11 +192,19 @@ export class Mob {
 
     handleMovement(player: any){
 
+        
+        let distance = this.calculateDistanceToPlayer(player.player);
+
         if(this.isDead){
+            
+            if(distance <= 10 && !this.hasBeenLooted)
+            {
+                console.log("Looted!");
+                this.hasBeenLooted = true;
+            }
+
             return;
         }
-
-        let distance = this.calculateDistanceToPlayer(player.player);
 
         this.handleDirection(player.player);
 
@@ -196,6 +218,7 @@ export class Mob {
         else if (distance <= 15){
             this.InitiateAttack(player);
         }
+
         else{
             this.isMoving = false;
         }

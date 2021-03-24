@@ -89,7 +89,7 @@ export class PlayerUpdate {
 
     movePlayer(keyCodes: { [key: number]: boolean },mapService: any): void {
 
-        if(this.isDead){
+        if(this.isDead || this.isAttacking){
             return;
         }
 

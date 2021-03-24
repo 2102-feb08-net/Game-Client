@@ -53,7 +53,8 @@ export class BackgroundService {
         if (y_max > MapConfig.rows) y_max = MapConfig.rows;
         
 
-
+        let xoffset =  this.viewPort.x + 1000 * 0.5 - this.viewPort.width * 0.5;
+        let yoffset =  this.viewPort.y + 600 * 0.5 - this.viewPort.height * 0.5;
 
         for (let x = x_min; x < x_max; x ++) {
 
@@ -63,8 +64,8 @@ export class BackgroundService {
             let value = MapConfig.map[index];// Tile value
 
    
-            let tile_x = Math.floor(x * MapConfig.desiredSize - this.viewPort.x + 1000 * 0.5 - this.viewPort.width * 0.5);// Tile x destination for drawing
-            let tile_y = Math.floor(y * MapConfig.desiredSize - this.viewPort.y + 600 * 0.5 - this.viewPort.height * 0.5);// Tile y destination for drawing
+            let tile_x = Math.floor(x * MapConfig.desiredSize - xoffset);// Tile x destination for drawing
+            let tile_y = Math.floor(y * MapConfig.desiredSize - yoffset);// Tile y destination for drawing
 
           
 
