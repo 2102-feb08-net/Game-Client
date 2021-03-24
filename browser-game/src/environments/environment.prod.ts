@@ -10,6 +10,6 @@ const oktaConfig: OktaConfig = {
 
 export const environment = {
   production: true,
-  gameApiBaseUrl: 'https://reventure-game-server.azurewebsites.net/',
+  gameApiBaseUrl: 'https://reventure-game-server.azurewebsites.net',
   okta: oktaConfig
 };
