@@ -48,6 +48,7 @@ export class Mob {
     isDead = false;
     hasKilled = false;
     hasBeenLooted = false;
+    isbeingRemoved = false;
     
 
     lootimage : HTMLImageElement = new Image();
@@ -196,10 +197,10 @@ export class Mob {
         let distance = this.calculateDistanceToPlayer(player.player);
 
         if(this.isDead){
-            
+
             if(distance <= 10 && !this.hasBeenLooted)
             {
-                console.log("Looted!");
+            
                 this.hasBeenLooted = true;
             }
 

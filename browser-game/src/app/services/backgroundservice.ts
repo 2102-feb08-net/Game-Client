@@ -52,6 +52,7 @@ export class BackgroundService {
         if (x_max > MapConfig.columns) x_max = MapConfig.columns;
         if (y_max > MapConfig.rows) y_max = MapConfig.rows;
         
+        mapContext.imageSmoothingEnabled = false;
 
         let xoffset =  this.viewPort.x + 1000 * 0.5 - this.viewPort.width * 0.5;
         let yoffset =  this.viewPort.y + 600 * 0.5 - this.viewPort.height * 0.5;

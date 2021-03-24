@@ -8,6 +8,7 @@ import { MobObj } from '../interfaces/mob';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Weapon } from '../interfaces/weapon';
+import { ThrowStmt } from '@angular/compiler';
 
 @Injectable()
 
@@ -35,11 +36,22 @@ export class MobService {
 
     DrawMobs(mobContext: any,mapService:any){
         mobContext.clearRect(0,0,window.innerWidth,window.innerHeight);
-        this.currentMobs.forEach(mob => mob.updateMobContext(mobContext,mapService));
+        this.currentMobs.forEach(mob => 
+            mob.updateMobContext(mobContext,mapService));
     }
 
     MoveMobs(player:any){
         this.currentMobs.forEach(mob => mob.handleMovement(player));
+        for(let i = 0; i < this.currentMobs.length;i++){
+            if(this.currentMobs[i].hasBeenLooted){
+            
+
+        
+                this.currentMobs.splice(i,1);
+       
+                
+            }
+        }
     }
 
     getAllMobs(): Observable<MobObj[]> {
