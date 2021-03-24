@@ -19,22 +19,32 @@ export class MobService {
 
     currentMobs: Mob[] = [];
 
+    allMobs: Mob[] = [];
+
     DeclareConfig(){
 
-        var mob = new Mob(0,0,1);
+        this.getAllMobs().subscribe(
+            (mobs) => {
+                mobs.forEach((mob) => 
 
-        var mob4 = new Mob(200, 100, 2);
+                this.currentMobs.push(new Mob(Math.random()*200,Math.random()*200,mob.id-1 )))
 
-        var mob5 = new Mob(250, 100, 3);
+            })
 
-        var mob6 = new Mob(50, 50, 4);
+        this.allMobs = this.currentMobs;
+        
+        
+    }
 
-        var mob7 = new Mob(250, 50, 5);
-
-        this.currentMobs.push(mob, mob4, mob5, mob6, mob7);
+    SpawnMob(){
+        let index = Math.ceil(Math.random()*this.currentMobs.length);
+        this.currentMobs.push(new Mob(Math.random()*400,Math.random()*400,index ))
     }
 
     DrawMobs(mobContext: any,mapService:any){
+        if(this.allMobs.length <= 2){
+            this.SpawnMob();
+        }
         mobContext.clearRect(0,0,window.innerWidth,window.innerHeight);
         this.currentMobs.forEach(mob => 
             mob.updateMobContext(mobContext,mapService));
@@ -44,10 +54,9 @@ export class MobService {
         this.currentMobs.forEach(mob => mob.handleMovement(player));
         for(let i = 0; i < this.currentMobs.length;i++){
             if(this.currentMobs[i].hasBeenLooted){
-                this.getLoot(this.currentMobs[i].Id).subscribe(
+                this.getLoot(this.currentMobs[i].Id + 1).subscribe(
                     (weapon) => {
                         player.Inventory.push(weapon);
-                        console.log(player.Inventory);
                     })
                 this.currentMobs.splice(i,1);
            
