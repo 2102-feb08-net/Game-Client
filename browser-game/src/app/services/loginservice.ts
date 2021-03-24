@@ -31,7 +31,7 @@ export class LoginApiService {
     return this.http.get<Character[]>(`${this.baseUrl}/api/player/leaderboard`);
   }
 
-  updateExp(characterId: number, exp: number): void {
-    this.http.put(`${this.baseUrl}/api/character/update-exp/{characterId}/{exp}`, {characterId: characterId, exp: exp});
+  updateExp(characterId: number, exp: number): Observable<Character> {
+    return this.http.put<Character>(`${this.baseUrl}/api/character/update-exp/${characterId}/${exp}`, 'hi');
   }
 }

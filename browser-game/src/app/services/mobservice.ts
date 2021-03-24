@@ -9,6 +9,8 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Weapon } from '../interfaces/weapon';
 import { ThrowStmt } from '@angular/compiler';
+import { LoginApiService } from './loginservice';
+import { PlayerUpdate } from './playerupdate';
 
 @Injectable()
 
@@ -25,9 +27,11 @@ export class MobService {
 
         this.getAllMobs().subscribe(
             (mobs) => {
+                console.log(mobs);
                 mobs.forEach((mob) => {
-                    this.allMobs.push(new Mob(Math.random()*200,Math.random()*200,mob.id-1 ,mob.exp,mob.attack,mob.defense))
-                    this.currentMobs.push(new Mob(Math.random()*200,Math.random()*200,mob.id-1 ,mob.exp,mob.attack,mob.defense))
+                    console.log(mob);
+                    this.allMobs.push(new Mob(Math.random()*200,Math.random()*200,mob.id-1 ,mob.attack,mob.defense,mob.exp))
+                    this.currentMobs.push(new Mob(Math.random()*200,Math.random()*200,mob.id-1 ,mob.attack,mob.defense,mob.exp))
                 }
        
 
@@ -55,19 +59,23 @@ export class MobService {
             mob.updateMobContext(mobContext,mapService));
     }
 
-    MoveMobs(player:any,loginservice:any){
+    MoveMobs(player: PlayerUpdate,loginservice: LoginApiService){
         this.currentMobs.forEach(mob => mob.handleMovement(player));
         for(let i = 0; i < this.currentMobs.length;i++){
             if(this.currentMobs[i].hasBeenLooted){
-                this.getLoot(this.currentMobs[i].Id + 1).subscribe(
+                this.getLoot(this.currentMobs[i].Id).subscribe(
                     (weapon) => {
                         player.Inventory.push(weapon);
-;
-                    })
-
-                loginservice.updateExp(player.Id, this.currentMobs[i].exp)
+                    });
+                
+                console.log('player: ' + player.Id);
+                console.log('exp: ' + this.currentMobs[i].exp);
+                loginservice.updateExp(player.Id, this.currentMobs[i].exp).subscribe(
+                    (character) => {
+                        console.log(character);
+                    }
+                );
                 this.currentMobs.splice(i,1);
-           
             }
         }
     }

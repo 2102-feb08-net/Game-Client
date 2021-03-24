@@ -1,6 +1,7 @@
 import { Position } from '../interfaces/position';
 
 import { Injectable, Input } from '@angular/core';
+import { Weapon } from '../interfaces/weapon';
 
 @Injectable()
 
@@ -34,7 +35,7 @@ export class PlayerUpdate {
 
     //Inventory Information
 
-    Inventory = [];
+    Inventory: Weapon[]= [];
 
     //Movement and Character State
 
