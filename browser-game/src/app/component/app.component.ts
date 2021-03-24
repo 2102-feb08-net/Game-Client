@@ -62,7 +62,6 @@ export class AppComponent implements OnInit {
     this.loginService.getPlayer('hamza@gmail.com', 'password123').subscribe(
       (player) => {
         let playerInfo: string = player.id + ' ' + player.characterId + ' ' + player.username + ' ' + player.password;
-        console.log(playerInfo);
         this.player = {
           id: player.id,
           characterId: player.characterId,
@@ -73,7 +72,6 @@ export class AppComponent implements OnInit {
           (character) => {
             let characterInfo: string = character.id + ' ' + character.characterName + ' ' + character.exp + ' ' + character.health
               + ' ' + character.attack + ' ' + character.defense + ' ' + character.mana;
-            console.log(characterInfo);
             this.character = {
               id: character.id,
               characterName: character.characterName,
@@ -93,18 +91,12 @@ export class AppComponent implements OnInit {
       }
     );
 
-    this.mobService.getLoot(1).subscribe(
-      (weapon) => {
-        let weaponInfo: string = weapon.id + ' ' + weapon.name + ' ' + weapon.description + ' ' + weapon.damage + ' ' + weapon.attackSpeed
-          + ' ' + weapon.levelRequirement + ' ' + weapon.rarity;
-        console.log(weaponInfo);
-      }
-    );
 
     this.oktaAuth.$authenticationState.subscribe((isAuthenticated) => {
       this.isAuthenticated = isAuthenticated;
       if (isAuthenticated) {
         this.oktaAuth.getUser().then((user) => (this.user = user));
+
       }
     });
 
@@ -116,7 +108,7 @@ export class AppComponent implements OnInit {
 
   public ngAfterViewInit(){
 
-    setTimeout(() => {
+
       this.playercontext = this.playerCanvas?.nativeElement.getContext("2d");
 
       this.mapContext = this.gameMap?.nativeElement.getContext("2d");
@@ -129,14 +121,30 @@ export class AppComponent implements OnInit {
   
       this.itemService.drawItem(this.itemContext);
   
-      this.startGameLoop();
-  
       this.mobService.DeclareConfig();
-    }, 10000);
+       
+      this.startGameLoop();
   }
 
-	startGameLoop() {
+  lookForLogin() {
 		this.gameLoop = setInterval(() => {
+    this.playerService.updatePlayerContext(this.playercontext,this.mapService);
+    this.playerService.movePlayer(this.keysPressed,this.mapService);
+    this.mapService.loadMapContext(this.mapContext,this.playerService.player);
+    this.mobService.DrawMobs(this.mobContext,this.mapService);
+    this.mobService.MoveMobs(this.playerService);
+		},15 );
+
+	}
+  
+
+	startGameLoop() {
+    
+		this.gameLoop = setInterval(() => {
+    if(this.playerService.username == "Guest"){
+      return;
+    };  
+    console.log(this.playerService.username);
     this.playerService.updatePlayerContext(this.playercontext,this.mapService);
     this.playerService.movePlayer(this.keysPressed,this.mapService);
     this.mapService.loadMapContext(this.mapContext,this.playerService.player);
