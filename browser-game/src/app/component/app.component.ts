@@ -78,6 +78,7 @@ export class AppComponent implements OnInit {
               defense: character.defense,
               mana: character.mana,
             };
+            this.playerService.Id = character.id;
             this.playerService.username = character.characterName;
             this.playerService.maxHealth = character.health;
             this.playerService.currentHealth = character.health;
@@ -125,7 +126,7 @@ export class AppComponent implements OnInit {
     this.playerService.movePlayer(this.keysPressed,this.mapService);
     this.mapService.loadMapContext(this.mapContext,this.playerService.player);
     this.mobService.DrawMobs(this.mobContext,this.mapService);
-    this.mobService.MoveMobs(this.playerService);
+    this.mobService.MoveMobs(this.playerService,this.loginService);
 		},15 );
 
 	}
@@ -137,12 +138,11 @@ export class AppComponent implements OnInit {
     if(this.playerService.username == "Guest"){
       return;
     };  
-    console.log(this.playerService.username);
     this.playerService.updatePlayerContext(this.playercontext,this.mapService);
     this.playerService.movePlayer(this.keysPressed,this.mapService);
     this.mapService.loadMapContext(this.mapContext,this.playerService.player);
     this.mobService.DrawMobs(this.mobContext,this.mapService);
-    this.mobService.MoveMobs(this.playerService);
+    this.mobService.MoveMobs(this.playerService,this.loginService);
 		},15 );
 
 	}

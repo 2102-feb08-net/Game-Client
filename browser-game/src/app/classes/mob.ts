@@ -3,7 +3,7 @@ import {Orc} from '../config/OrcConfig';
 
 export class Mob {
 
-    constructor(x:number,y:number,id:number){
+    constructor(x:number,y:number,id:number,attack:number,defense:number,exp:number){
         this.Id = id;
         this.mob.x=x;
         this.mob.y=y;
@@ -16,6 +16,9 @@ export class Mob {
         this.mobimageLeft.src = Orc.spritePathLeft;
         this.mobimageLeft.height=Orc.height;
         this.mobimageLeft.width = Orc.width;
+        this.attack = attack;
+        this.defense = defense;
+        this.exp = exp;
     }
 
     mob: Position = {
@@ -30,9 +33,9 @@ export class Mob {
     //Fields Related to Mob Information
 
     Id = 0;
-    mobType = "Goblin";
     maxHealth = 10;
     currentHealth = 10;
+    exp = 0;
     defense = 10;
     attack = .1;
 

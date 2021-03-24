@@ -25,38 +25,48 @@ export class MobService {
 
         this.getAllMobs().subscribe(
             (mobs) => {
-                mobs.forEach((mob) => 
+                mobs.forEach((mob) => {
+                    this.allMobs.push(new Mob(Math.random()*200,Math.random()*200,mob.id-1 ,mob.exp,mob.attack,mob.defense))
+                    this.currentMobs.push(new Mob(Math.random()*200,Math.random()*200,mob.id-1 ,mob.exp,mob.attack,mob.defense))
+                }
+       
 
-                this.currentMobs.push(new Mob(Math.random()*200,Math.random()*200,mob.id-1 )))
-
-            })
-
-        this.allMobs = this.currentMobs;
+        )})
         
         
     }
 
     SpawnMob(){
-        let index = Math.ceil(Math.random()*this.currentMobs.length);
-        this.currentMobs.push(new Mob(Math.random()*400,Math.random()*400,index ))
+        let index = Math.ceil(Math.random()*this.allMobs.length);
+        console.log(this.allMobs);
+        let id = this.allMobs[index].Id;
+        let exp = this.allMobs[index].exp;
+        let attack = this.allMobs[index].attack;
+        let defense = this.allMobs[index].defense;
+
+        this.currentMobs.push(new Mob(Math.random()*400,Math.random()*400,id,exp,attack,defense))
     }
 
     DrawMobs(mobContext: any,mapService:any){
-        if(this.allMobs.length <= 2){
+        if(this.currentMobs.length <= 2){
             this.SpawnMob();
+            console.log("Spawning Mob");
         }
         mobContext.clearRect(0,0,window.innerWidth,window.innerHeight);
         this.currentMobs.forEach(mob => 
             mob.updateMobContext(mobContext,mapService));
     }
 
-    MoveMobs(player:any){
+    MoveMobs(player:any,loginservice:any){
         this.currentMobs.forEach(mob => mob.handleMovement(player));
         for(let i = 0; i < this.currentMobs.length;i++){
             if(this.currentMobs[i].hasBeenLooted){
                 this.getLoot(this.currentMobs[i].Id + 1).subscribe(
                     (weapon) => {
+                        console.log(this.currentMobs[i]);
+                        console.log(this.currentMobs.length);
                         player.Inventory.push(weapon);
+                        loginservice.updateExp(player.Id, this.currentMobs[i].exp);
                     })
                 this.currentMobs.splice(i,1);
            

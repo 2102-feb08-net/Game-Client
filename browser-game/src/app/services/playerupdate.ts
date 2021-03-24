@@ -18,7 +18,7 @@ export class PlayerUpdate {
 	};
 
     //Fields Related to Character Sprite
-
+    Id = 0;
     currentFrame = 0;
     playerSpeed = 1;
     playerWidth = 64;
