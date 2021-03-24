@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
+import { OktaAuthModule, OKTA_CONFIG } from '@okta/okta-angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,9 +19,12 @@ import { environment } from 'src/environments/environment';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    OktaAuthModule
   ],
-  providers: [PlayerUpdate, BackgroundService,MobService,PhysicsService,ItemService],
+  providers: [PlayerUpdate, BackgroundService,MobService,PhysicsService,ItemService, 
+    { provide: OKTA_CONFIG, useValue: environment.okta }
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

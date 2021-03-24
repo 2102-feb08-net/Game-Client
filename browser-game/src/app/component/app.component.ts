@@ -1,4 +1,6 @@
 import { Component ,OnInit, ViewChild, ElementRef, HostListener} from '@angular/core';
+import { OktaAuthService } from '@okta/okta-angular';
+import { UserClaims } from '@okta/okta-auth-js';
 import {PlayerUpdate} from '../services/playerupdate';
 import {BackgroundService} from '../services/backgroundservice';
 import {MobService} from '../services/mobservice';
@@ -16,6 +18,7 @@ import { Weapon } from '../interfaces/weapon';
 export class AppComponent implements OnInit {
 
   constructor(
+    private oktaAuth: OktaAuthService,
     private physicsService: PhysicsService,
     private playerService: PlayerUpdate, 
     private mapService: BackgroundService, 
@@ -47,8 +50,10 @@ export class AppComponent implements OnInit {
   private itemContext: any;
 
   player: any;
-
   character: any;
+  isAuthenticated = false;
+  user: UserClaims | null = null;
+  showUI = true;
 
   public ngOnInit(){
     this.loginService.getPlayer('hamza@gmail.com', 'password123').subscribe(
@@ -61,27 +66,24 @@ export class AppComponent implements OnInit {
           username: player.username,
           password: player.password
         };
+        this.loginService.getCharacter(this.player.id).subscribe(
+          (character) => {
+            let characterInfo: string = character.id + ' ' + character.characterName + ' ' + character.exp + ' ' + character.health
+              + ' ' + character.attack + ' ' + character.defense + ' ' + character.mana;
+            console.log(characterInfo);
+            this.character = {
+              id: character.id,
+              characterName: character.characterName,
+              exp: character.exp,
+              health: character.health,
+              attack: character.attack,
+              defense: character.defense,
+              mana: character.mana,
+            };
+          }
+        );
       }
     );
-    
-    setTimeout(() => {
-      this.loginService.getCharacter(this.player.id).subscribe(
-        (character) => {
-          let characterInfo: string = character.id + ' ' + character.characterName + ' ' + character.exp + ' ' + character.health
-            + ' ' + character.attack + ' ' + character.defense + ' ' + character.mana;
-          console.log(characterInfo);
-          this.character = {
-            id: character.id,
-            characterName: character.characterName,
-            exp: character.exp,
-            health: character.health,
-            attack: character.attack,
-            defense: character.defense,
-            mana: character.mana,
-          };
-        }
-      );
-    }, 15000);
 
     this.mobService.getLoot(1).subscribe(
       (weapon) => {
@@ -90,6 +92,13 @@ export class AppComponent implements OnInit {
         console.log(weaponInfo);
       }
     );
+
+    this.oktaAuth.$authenticationState.subscribe((isAuthenticated) => {
+      this.isAuthenticated = isAuthenticated;
+      if (isAuthenticated) {
+        this.oktaAuth.getUser().then((user) => (this.user = user));
+      }
+    });
     
   }
 
@@ -146,5 +155,16 @@ export class AppComponent implements OnInit {
     this.keysPressed[event.keyCode] = false;
 	}
 
+  login(): void {
+    this.oktaAuth.signInWithRedirect();
+  }
+
+  logout(): void {
+    this.oktaAuth.signOut();
+  }
+
+  toggleUI(): void{
+    this.showUI = !this.showUI;
+  }
 
 }

@@ -26,4 +26,8 @@ export class LoginApiService {
   getKillStat(playerId: number): Observable<KillStat[]> {
     return this.http.get<KillStat[]>(`${this.baseUrl}/api/player/${playerId}/kill-stat`);
   }
+
+  getLeaderboard(): Observable<Character[]> {
+    return this.http.get<Character[]>(`${this.baseUrl}/api/player/leaderboard`);
+  }
 }

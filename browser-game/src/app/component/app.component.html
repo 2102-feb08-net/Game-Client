@@ -19,11 +19,15 @@ style="position: absolute; top: 10px; left: 10px; z-index: 2;"
 style="position: absolute; top: 10px; left: 10px; z-index: 1;">
 </canvas>
 
-<span #uimenu style="position: absolute; top:10px; left:15px; z-index: 4; background-color: black;">
+<span #uimenu *ngIf="showUI" style="position: absolute; top:10px; left:15px; z-index: 4; background-color: black;">
     <form>
         <input class="uibutton" type="button" value="Status">
         <input class="uibutton" type="button" value="Highscore">
         <input class="uibutton" type="button" value="LogIn">
         <input class="uibutton" type="button" value="X">
     </form>
+</span>
+
+<span id="ui-toggle" style="position: absolute; top:10px; left:500px; z-index: 4; background-color: black;">
+    <button (click)="toggleUI()">UI</button>
 </span>
