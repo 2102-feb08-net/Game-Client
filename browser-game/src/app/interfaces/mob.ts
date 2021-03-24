@@ -6,4 +6,5 @@ export interface MobObj {
     attack: number;
     defense: number;
     speed: number;
+    mobid: number;
 }
