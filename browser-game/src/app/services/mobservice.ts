@@ -38,7 +38,6 @@ export class MobService {
 
     SpawnMob(){
         let index = Math.ceil(Math.random()*this.allMobs.length);
-        console.log(this.allMobs);
         let id = this.allMobs[index].Id;
         let exp = this.allMobs[index].exp;
         let attack = this.allMobs[index].attack;
@@ -50,7 +49,6 @@ export class MobService {
     DrawMobs(mobContext: any,mapService:any){
         if(this.currentMobs.length <= 2){
             this.SpawnMob();
-            console.log("Spawning Mob");
         }
         mobContext.clearRect(0,0,window.innerWidth,window.innerHeight);
         this.currentMobs.forEach(mob => 
@@ -63,11 +61,11 @@ export class MobService {
             if(this.currentMobs[i].hasBeenLooted){
                 this.getLoot(this.currentMobs[i].Id + 1).subscribe(
                     (weapon) => {
-                        console.log(this.currentMobs[i]);
-                        console.log(this.currentMobs.length);
                         player.Inventory.push(weapon);
-                        loginservice.updateExp(player.Id, this.currentMobs[i].exp);
+;
                     })
+
+                loginservice.updateExp(player.Id, this.currentMobs[i].exp)
                 this.currentMobs.splice(i,1);
            
             }
