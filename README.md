@@ -25,6 +25,7 @@ To-do list:
 Use the commands below to clone the client and server repositories:
 * git clone https://github.com/2102-feb08-net/Game-Client.git
 * git clone https://github.com/2102-feb08-net/Game-Server.git
+
 Open Visual Studio Code and follow the instructions below:
 * Open the folder that contains the Game-Client repository.
 * Open a new terminal in Visual Studio Code.
@@ -32,6 +33,7 @@ Open Visual Studio Code and follow the instructions below:
    * Use the cd command to move to the directory 'browser-game.'
    * Run the command 'npm install' to get all the packages and dependencies needed for the project to run. 
    * Once the installation is finished, run the command 'ng serve' to launch the application; if a tab is not opened automatically in the browser, you can click on the link produced by command to enter the game.
+
 In the browser tab:
 * Select the option 'LogIn' and enter the credentials to access the game.
 Alternatively, you can enter the game through the following link:
@@ -45,12 +47,14 @@ Controls:
 * S - Move down.
 * D - Move right.
 * Spacebar - Attack (The character will not be able to move when attacking).
+
 Options:
 * Stats - displays the current health, attack, defense, and other attributes of the player's character.
 * Leaderboard - displays a list of players with the highest amount of exp.
 * Logout - closes the player's session.
 * Login - allows player to access the game and its character.
-Objective
+
+Objective:
 * As mentioned in the project description, Reventure is an open world game where the player can kill mobs to gather exp and get to the top of the leaderboard. Mobs spawn at random locations in the map and may appear in big groups; they are strong and can bring the player down if the player is not careful.
 
 # Contributors #
